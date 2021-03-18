@@ -1,0 +1,176 @@
+/home/cliu7/utils/AdmixTools/bin/qpAdm: parameter file: temp/param/qpAdm_Gurung.Yi.Chokhopani.par3qy_vq_z
+### THE INPUT PARAMETERS
+##PARAMETER NAME: VALUE
+DIR: data/intermediate
+S1: HO_all_merged.qpAdm
+indivname: data/intermediate/HO_all_merged.qpAdm.grouped.ind
+snpname: data/intermediate/HO_all_merged.qpAdm.snp
+genotypename: data/intermediate/HO_all_merged.qpAdm.geno
+popleft: temp/param/left.3qy_vq_z
+popright: temp/param/right.3qy_vq_z
+details: YES
+## qpAdm version: 810
+seed: 2063638736
+packed geno read OK
+end of inpack
+
+left pops:
+Gurung
+Yi
+Chokhopani
+
+right pops:
+Mbuti
+Anatolia_N
+Ami
+Mixe
+Ganj_Dareh_N
+Onge
+Villabruna
+DevilsGate
+
+  0               Gurung    5
+  1                   Yi    8
+  2           Chokhopani    2
+  3                Mbuti   10
+  4           Anatolia_N   25
+  5                  Ami   10
+  6                 Mixe   10
+  7         Ganj_Dareh_N    7
+  8                 Onge   12
+  9           Villabruna    1
+ 10           DevilsGate    4
+jackknife block size:     0.050
+snps: 498990  indivs: 94
+number of blocks for block jackknife: 710
+## ncols: 498990
+coverage:               Gurung 498036
+coverage:                   Yi 498990
+coverage:           Chokhopani 498917
+coverage:                Mbuti 498990
+coverage:           Anatolia_N 498137
+coverage:                  Ami 498990
+coverage:                 Mixe 498990
+coverage:         Ganj_Dareh_N 457128
+coverage:                 Onge 498990
+coverage:           Villabruna 415230
+coverage:           DevilsGate 498716
+dof (jackknife):   583.384
+numsnps used: 425529
+codimension 1
+f4info: 
+f4rank: 1 dof:      6 chisq:    20.994 tail:        0.00183900472 dofdiff:      8 chisqdiff:   -20.994 taildiff:                    1
+B:
+          scale     1.000 
+     Anatolia_N    -0.124 
+            Ami     2.072 
+           Mixe     0.913 
+   Ganj_Dareh_N    -0.187 
+           Onge     0.309 
+     Villabruna    -0.140 
+     DevilsGate     1.306 
+A:
+          scale  1081.128 
+             Yi     1.383 
+     Chokhopani     0.296 
+
+
+full rank
+f4info: 
+f4rank: 2 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      6 chisqdiff:    20.994 taildiff:        0.00183900472
+B:
+          scale     1.000     1.000 
+     Anatolia_N    -0.187     0.783 
+            Ami     2.001     1.204 
+           Mixe     0.870     0.853 
+   Ganj_Dareh_N    -0.304     1.472 
+           Onge     0.346    -0.491 
+     Villabruna    -0.175     0.768 
+     DevilsGate     1.401    -1.100 
+A:
+          scale  1062.945  4233.830 
+             Yi     1.352     0.181 
+     Chokhopani     0.415    -1.403 
+
+
+best coefficients:    -0.273     1.273 
+Jackknife mean:     -0.261514457     1.261514457 
+      std. errors:     0.126     0.126 
+
+error covariance (* 1000000)
+     15783     -15783 
+    -15783      15783 
+
+
+summ: Gurung    2      0.001839    -0.262     1.262 15783 -15783 15783 
+
+    fixed pat  wt  dof     chisq       tail prob
+           00  0     6    20.994        0.001839    -0.273     1.273  infeasible
+           01  1     7   355.823               0     1.000    -0.000 
+           10  1     7    28.771     0.000159287     0.000     1.000 
+best pat:           00         0.001839              -  -
+best pat:           10      0.000159287  chi(nested):     7.777 p-value for nested model:      0.00529259
+
+coeffs:    -0.273     1.273 
+
+## dscore:: f_4(Base, Fit, Rbase, right2)
+## genstat:: f_4(Base, Fit, right1, right2)
+
+details:              Yi      Anatolia_N    -0.000204   -1.460318
+details:      Chokhopani      Anatolia_N    -0.000351   -1.583308
+dscore:      Anatolia_N f4:    -0.000392 Z:    -1.446825
+
+details:              Yi             Ami     0.002598   15.165198
+details:      Chokhopani             Ami     0.000369    1.492555
+dscore:             Ami f4:    -0.000240 Z:    -0.798530
+
+details:              Yi            Mixe     0.001146    6.426759
+details:      Chokhopani            Mixe     0.000040    0.153047
+dscore:            Mixe f4:    -0.000261 Z:    -0.813967
+
+details:              Yi    Ganj_Dareh_N    -0.000324   -1.895712
+details:      Chokhopani    Ganj_Dareh_N    -0.000628   -2.329066
+dscore:    Ganj_Dareh_N f4:    -0.000711 Z:    -2.154506
+
+details:              Yi            Onge     0.000418    2.450790
+details:      Chokhopani            Onge     0.000275    1.079982
+dscore:            Onge f4:     0.000236 Z:     0.764297
+
+details:              Yi      Villabruna    -0.000191   -0.847998
+details:      Chokhopani      Villabruna    -0.000351   -1.025619
+dscore:      Villabruna f4:    -0.000394 Z:    -0.949585
+
+details:              Yi      DevilsGate     0.001738    8.840507
+details:      Chokhopani      DevilsGate     0.000895    3.048719
+dscore:      DevilsGate f4:     0.000665 Z:     1.860653
+
+gendstat:                Mbuti           Anatolia_N    -1.447
+gendstat:                Mbuti                  Ami    -0.799
+gendstat:                Mbuti                 Mixe    -0.814
+gendstat:                Mbuti         Ganj_Dareh_N    -2.155
+gendstat:                Mbuti                 Onge     0.764
+gendstat:                Mbuti           Villabruna    -0.950
+gendstat:                Mbuti           DevilsGate     1.861
+gendstat:           Anatolia_N                  Ami     0.548
+gendstat:           Anatolia_N                 Mixe     0.426
+gendstat:           Anatolia_N         Ganj_Dareh_N    -1.236
+gendstat:           Anatolia_N                 Onge     2.224
+gendstat:           Anatolia_N           Villabruna    -0.007
+gendstat:           Anatolia_N           DevilsGate     3.072
+gendstat:                  Ami                 Mixe    -0.079
+gendstat:                  Ami         Ganj_Dareh_N    -1.386
+gendstat:                  Ami                 Onge     1.664
+gendstat:                  Ami           Villabruna    -0.368
+gendstat:                  Ami           DevilsGate     3.001
+gendstat:                 Mixe         Ganj_Dareh_N    -1.253
+gendstat:                 Mixe                 Onge     1.584
+gendstat:                 Mixe           Villabruna    -0.302
+gendstat:                 Mixe           DevilsGate     2.660
+gendstat:         Ganj_Dareh_N                 Onge     2.849
+gendstat:         Ganj_Dareh_N           Villabruna     0.756
+gendstat:         Ganj_Dareh_N           DevilsGate     3.459
+gendstat:                 Onge           Villabruna    -1.499
+gendstat:                 Onge           DevilsGate     1.132
+gendstat:           Villabruna           DevilsGate     2.251
+
+## end of run

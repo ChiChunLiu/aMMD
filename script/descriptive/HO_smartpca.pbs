@@ -1,0 +1,185 @@
+#!/bin/sh
+#PBS -N pca
+#PBS -S /bin/bash
+#PBS -l mem=20gb
+#PBS -l walltime=24:00:00
+#PBS -l nodes=1:ppn=5
+
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+module load plink/1.90
+
+subset=${1:-NO}
+convertf='/home/cliu7/utils/AdmixTools/bin/convertf'
+smartpca="/home/cliu7/utils/EIG-6.1.4/bin/smartpca"
+input_path="/scratch/cliu7/ancient_ACA/data/tidy/eigenstrat"
+par_path="/home/cliu7/ancient_ACA/data/params/pca_params"
+out_path="/home/cliu7/ancient_ACA/output/pca"
+scratch_data="/scratch/cliu7/ancient_ACA/data"
+
+
+make_param_file () {
+    local INPUT_PREFIX=$1
+    local OUT_PREFIX=$2
+    local PAR=$3
+    local poplist=$4
+    echo "genotypename: ${INPUT_PREFIX}.geno" > $PAR
+    echo "snpname: ${INPUT_PREFIX}.snp" >> $PAR
+    echo "indivname: ${INPUT_PREFIX}.ind" >> $PAR
+    #echo "badsnpname: 
+    echo "poplistname: ${poplist}" >> $PAR
+    echo "shrinkmode: YES" >> $PAR
+    echo "lsqproject: YES" >> $PAR
+    echo "snpweightoutname: ${OUT_PREFIX}.snpeigs" >> $PAR
+    echo "evecoutname: ${OUT_PREFIX}.eigs" >> $PAR
+    echo "evaloutname: ${OUT_PREFIX}.eval" >> $PAR
+    echo "phylipoutname: ${OUT_PREFIX}.fst" >> $PAR
+    echo "numoutevec: 6" >> $PAR
+    echo "numoutlieriter: 0" >> $PAR
+    echo "outlieroutname: ${OUT_PREFIX}.out">> $PAR
+    echo "altnormstyle: NO" >> $PAR
+    #echo "inbreed: YES" >> $PAR
+    echo "nsnpldregress: 0" >> $PAR
+    echo "noxdata: YES" >> $PAR
+    echo "nomalexhet: YES" >> $PAR
+}
+
+
+subset_eigenstrat () {
+    local par=$(mktemp par.XXXXXX)
+    local poplist=$1
+    local prefix=$2
+    local out=$3
+    echo "genotypename: ${prefix}.geno" > $par
+    echo "snpname: ${prefix}.snp" >> $par
+    echo "indivname: ${prefix}.ind" >> $par
+    echo "outputformat: PACKEDPED" >> $par
+    echo "genotypeoutname: ${out}.bed" >> $par
+    echo "snpoutname: ${out}.bim" >> $par
+    echo "indivoutname: ${out}.fam" >> $par
+    echo "poplistname: ${poplist}" >> $par
+    echo "hashcheck: NO" >> $par
+    echo "familynames: NO" >> $par
+
+    $convertf -p $par
+    rm $par
+}
+
+subset_ind2pop () {
+    local par=$(mktemp par.XXXXXX)
+    local poplist=$1
+    local prefix=$2
+    local out=$3
+    echo "genotypename: ${prefix}.geno" > $par
+    echo "snpname: ${prefix}.snp" >> $par
+    echo "indivname: ${prefix}.ind" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: ${out}.geno" >> $par
+    echo "snpoutname: ${out}.snp" >> $par
+    echo "indivoutname: ${out}.ind" >> $par
+    echo "poplistname: ${poplist}" >> $par
+    echo "hashcheck: NO" >> $par
+    echo "familynames: NO" >> $par
+
+    $convertf -p $par
+    rm $par ${out}.geno ${out}.snp
+}
+
+
+plink2eigenstrat () {
+    local par=$(mktemp par.XXXXXX)
+    local prefix=$1
+    echo "genotypename: ${prefix}.bed" > $par
+    echo "snpname: ${prefix}.bim" >> $par
+    echo "indivname: ${prefix}.fam" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: ${prefix}.geno" >> $par
+    echo "snpoutname: ${prefix}.snp" >> $par
+    echo "indivoutname: ${prefix}.ind" >> $par
+    echo "hashcheck: NO" >> $par
+    echo "familynames: NO" >> $par
+
+    $convertf -p $par
+    rm $par
+}
+
+#########################################
+# create Human Origin PCA populations  ##
+#########################################
+scratch_data='/scratch/cliu7/ancient_ACA/data'
+poplist_EA=$(mktemp poplist.XXXXXX)
+poplist_SIB=$(mktemp poplist.XXXXXX)
+poplist_TIB=$(mktemp poplist.XXXXXX)
+
+grep EastAsia ${scratch_data}/support/dataset_info/Lazaridis2014_population_information.csv | \
+    cut -f1 -d, | sort | uniq > $poplist_EA
+grep CentralAsiaSiberia ${scratch_data}/support/dataset_info/Lazaridis2014_population_information.csv | \
+    cut -f1 -d, | sort | uniq > $poplist_SIB
+grep TibetoBurmese  ${scratch_data}/support/dataset_info/nakatsuka.population_info.txt | \
+    cut -f3 | sort | uniq > $poplist_TIB
+awk '{print $3}' ${scratch_data}/raw/eigenstrat/Wang2020/EastAsian_HO_subset.ind | \
+    sort | grep Tibetan | uniq >> $poplist_TIB
+echo "Sherpa.Wang Qiang_Danba Qiang_Daofu Tamang Gurung" | tr " " "\n"  >> $poplist_TIB
+echo "Sherpa.WGS UpperMustang.WGS Tsum.WGS Nubri.WGS" | tr " " "\n"  >> $poplist_TIB
+
+###########
+## Set 1 ##
+###########
+
+poplist="${out_path}/set1.population.txt"
+par=$(mktemp par.XXXXX)
+cat $poplist_EA $poplist_SIB $poplist_TIB > $poplist 
+input_prefix="${input_path}/HO_all_merged"
+out_prefix="${out_path}/HO_all_merged.set1"
+make_param_file $input_prefix $out_prefix $par $poplist
+$smartpca -p $par
+rm $par
+
+###########
+## set 2 ##
+###########
+
+present_day_pops="${out_path}/set2.present_day.txt"
+poplist="${out_path}/set2.population_list.txt"
+cat $poplist_SIB $poplist_EA $poplist_TIB > tmp
+fgrep -vf ${out_path}/western_admixture_populations.txt tmp > $present_day_pops
+
+cp $present_day_pops $poplist
+ancients="Chokhopani Rhirhi Lubrak Mebrak Kyang Samdzong YR_MN Upper_YR_LN"
+echo "$ancients" | tr " " "\n" >> $poplist
+
+if [ "$subset" = YES ]; then
+    echo "start subsetting set 2 populations..."
+    set2_tmp_prefix="${scratch_data}/intermediate/HO_all_merged.description.tmp"
+    subset_eigenstrat $poplist \
+		      ${input_path}/HO_all_merged \
+ 		      $set2_tmp_prefix
+    subset_ind2pop  $poplist \
+		    ${input_path}/HO_all_merged \
+		    $set2_tmp_prefix
+
+    # convert to plink for LD pruning and maf thresholding
+    set2_file_prefix="${scratch_data}/intermediate/HO_all_merged.description"
+    plink --bfile $set2_tmp_prefix \
+	  --allow-no-sex \
+	  --maf 0.01 \
+	  --indep-pairwise 200 25 0.2 \
+	  --make-bed \
+	  --out $set2_file_prefix
+    #python rename_HO_pops.py
+    #cp ${set2_tmp_prefix}.2.ind ${set2_tmp_prefix}.ind
+    # convert back to eigenstrat for PCA
+    plink2eigenstrat $set2_file_prefix
+    cp ${set2_tmp_prefix}.ind ${set2_file_prefix}.ind
+fi
+
+# run pca
+set2_file_prefix="${scratch_data}/intermediate/HO_all_merged.description"
+par=$(mktemp par.XXXXX)
+in_prefix="${set2_file_prefix}"
+out_prefix="${out_path}/HO_all_merged.set2"
+make_param_file $in_prefix $out_prefix $par $present_day_pops
+echo "runnning pca"
+$smartpca -p $par
+rm tmp $par

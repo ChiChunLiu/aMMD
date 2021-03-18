@@ -1,0 +1,194 @@
+/home/cliu7/utils/AdmixTools/bin/qpAdm: parameter file: temp/param/qpAdm_Gurung.Upper_YR_LN.Lubrak.Han.par_cy3ul1c
+### THE INPUT PARAMETERS
+##PARAMETER NAME: VALUE
+DIR: data/intermediate
+S1: HO_all_merged.qpAdm
+indivname: data/intermediate/HO_all_merged.qpAdm.grouped.ind
+snpname: data/intermediate/HO_all_merged.qpAdm.snp
+genotypename: data/intermediate/HO_all_merged.qpAdm.geno
+popleft: temp/param/left._cy3ul1c
+popright: temp/param/right._cy3ul1c
+details: YES
+## qpAdm version: 810
+seed: -157211204
+packed geno read OK
+end of inpack
+
+left pops:
+Gurung
+Upper_YR_LN
+Lubrak
+Han
+
+right pops:
+Mbuti
+Anatolia_N
+Ami
+Mixe
+Ganj_Dareh_N
+Onge
+Villabruna
+DevilsGate
+
+  0               Gurung    5
+  1          Upper_YR_LN    7
+  2               Lubrak    2
+  3                  Han   33
+  4                Mbuti   10
+  5           Anatolia_N   25
+  6                  Ami   10
+  7                 Mixe   10
+  8         Ganj_Dareh_N    7
+  9                 Onge   12
+ 10           Villabruna    1
+ 11           DevilsGate    4
+jackknife block size:     0.050
+snps: 498990  indivs: 126
+number of blocks for block jackknife: 710
+## ncols: 498990
+coverage:               Gurung 498036
+coverage:          Upper_YR_LN 496840
+coverage:               Lubrak 327444
+coverage:                  Han 498990
+coverage:                Mbuti 498990
+coverage:           Anatolia_N 498137
+coverage:                  Ami 498990
+coverage:                 Mixe 498990
+coverage:         Ganj_Dareh_N 457128
+coverage:                 Onge 498990
+coverage:           Villabruna 415230
+coverage:           DevilsGate 498716
+dof (jackknife):   583.203
+numsnps used: 305339
+codimension 1
+f4info: 
+f4rank: 2 dof:      5 chisq:     5.971 tail:          0.309064089 dofdiff:      7 chisqdiff:    -5.971 taildiff:                    1
+B:
+          scale     1.000     1.000 
+     Anatolia_N    -0.154     0.080 
+            Ami     1.858    -1.936 
+           Mixe     0.895     0.431 
+   Ganj_Dareh_N    -0.160     0.323 
+           Onge     0.239     0.003 
+     Villabruna     0.063     0.655 
+     DevilsGate     1.623     1.589 
+A:
+          scale   693.075  2707.153 
+    Upper_YR_LN     1.059     1.087 
+         Lubrak     0.536     0.822 
+            Han     1.261    -1.070 
+
+
+full rank
+f4info: 
+f4rank: 3 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      5 chisqdiff:     5.971 taildiff:          0.309064089
+B:
+          scale     1.000     1.000     1.000 
+     Anatolia_N    -0.141     0.078    -0.012 
+            Ami     1.856    -1.811     2.156 
+           Mixe     0.905     0.461    -0.774 
+   Ganj_Dareh_N    -0.135     0.288    -0.821 
+           Onge     0.263    -0.004    -0.642 
+     Villabruna     0.054     0.738     0.797 
+     DevilsGate     1.620     1.695    -0.180 
+A:
+          scale   707.625  2312.511  5162.887 
+    Upper_YR_LN     1.089     0.869    -0.140 
+         Lubrak     0.399     1.261     1.684 
+            Han     1.287    -0.809     0.381 
+
+
+best coefficients:    -1.362     2.118     0.244 
+Jackknife mean:     -1.229957145     2.017669764     0.212287381 
+      std. errors:     0.566     0.422     0.210 
+
+error covariance (* 1000000)
+    320164    -227165     -92999 
+   -227165     178157      49007 
+    -92999      49007      43992 
+
+
+summ: Gurung    3      0.309064    -1.230     2.018     0.212 320164 -227165 -92999 178157 49007 43992 
+
+    fixed pat  wt  dof     chisq       tail prob
+          000  0     5     5.971        0.309064    -1.362     2.118     0.244  infeasible
+          001  1     6     7.904        0.245229    -0.964     1.964    -0.000  infeasible
+          010  1     6   112.949      4.9138e-22     1.842     0.000    -0.842  infeasible
+          100  1     6    27.968     9.52639e-05     0.000     1.219    -0.219  infeasible
+          011  2     7   216.674               0     1.000     0.000     0.000 
+          101  2     7    39.015     1.94201e-06     0.000     1.000     0.000 
+          110  2     7   955.220               0     0.000    -0.000     1.000 
+best pat:          000         0.309064              -  -
+best pat:          001         0.245229  chi(nested):     1.933 p-value for nested model:        0.164427 infeasible
+best pat:          101      1.94201e-06  chi(nested):    31.111 p-value for nested model:     2.43729e-08
+
+coeffs:    -1.362     2.118     0.244 
+
+## dscore:: f_4(Base, Fit, Rbase, right2)
+## genstat:: f_4(Base, Fit, right1, right2)
+
+details:     Upper_YR_LN      Anatolia_N    -0.000175   -0.899703
+details:          Lubrak      Anatolia_N    -0.000017   -0.064136
+details:             Han      Anatolia_N    -0.000276   -2.044335
+dscore:      Anatolia_N f4:     0.000134 Z:     0.232203
+
+details:     Upper_YR_LN             Ami     0.002144    9.265838
+details:          Lubrak             Ami     0.000797    2.579674
+details:             Han             Ami     0.004187   24.907484
+dscore:             Ami f4:    -0.000210 Z:    -0.325579
+
+details:     Upper_YR_LN            Mixe     0.001611    6.410110
+details:          Lubrak            Mixe     0.000546    1.676926
+details:             Han            Mixe     0.001446    8.143053
+dscore:            Mixe f4:    -0.000685 Z:    -0.993484
+
+details:     Upper_YR_LN    Ganj_Dareh_N    -0.000061   -0.247856
+details:          Lubrak    Ganj_Dareh_N    -0.000171   -0.523058
+details:             Han    Ganj_Dareh_N    -0.000396   -2.362422
+dscore:    Ganj_Dareh_N f4:    -0.000375 Z:    -0.539824
+
+details:     Upper_YR_LN            Onge     0.000437    1.960723
+details:          Lubrak            Onge    -0.000034   -0.109251
+details:             Han            Onge     0.000447    2.768819
+dscore:            Onge f4:    -0.000559 Z:    -0.829132
+
+details:     Upper_YR_LN      Villabruna     0.000351    1.075443
+details:          Lubrak      Villabruna     0.000742    1.714222
+details:             Han      Villabruna    -0.000087   -0.387031
+dscore:      Villabruna f4:     0.001073 Z:     1.189275
+
+details:     Upper_YR_LN      DevilsGate     0.003166   11.016261
+details:          Lubrak      DevilsGate     0.001815    4.979178
+details:             Han      DevilsGate     0.002361   11.967879
+dscore:      DevilsGate f4:     0.000108 Z:     0.136613
+
+gendstat:                Mbuti           Anatolia_N     0.232
+gendstat:                Mbuti                  Ami    -0.326
+gendstat:                Mbuti                 Mixe    -0.993
+gendstat:                Mbuti         Ganj_Dareh_N    -0.540
+gendstat:                Mbuti                 Onge    -0.829
+gendstat:                Mbuti           Villabruna     1.189
+gendstat:                Mbuti           DevilsGate     0.137
+gendstat:           Anatolia_N                  Ami    -0.625
+gendstat:           Anatolia_N                 Mixe    -1.328
+gendstat:           Anatolia_N         Ganj_Dareh_N    -0.873
+gendstat:           Anatolia_N                 Onge    -1.140
+gendstat:           Anatolia_N           Villabruna     1.238
+gendstat:           Anatolia_N           DevilsGate    -0.036
+gendstat:                  Ami                 Mixe    -0.877
+gendstat:                  Ami         Ganj_Dareh_N    -0.240
+gendstat:                  Ami                 Onge    -0.588
+gendstat:                  Ami           Villabruna     1.481
+gendstat:                  Ami           DevilsGate     0.472
+gendstat:                 Mixe         Ganj_Dareh_N     0.407
+gendstat:                 Mixe                 Onge     0.185
+gendstat:                 Mixe           Villabruna     1.966
+gendstat:                 Mixe           DevilsGate     1.105
+gendstat:         Ganj_Dareh_N                 Onge    -0.245
+gendstat:         Ganj_Dareh_N           Villabruna     1.604
+gendstat:         Ganj_Dareh_N           DevilsGate     0.571
+gendstat:                 Onge           Villabruna     1.853
+gendstat:                 Onge           DevilsGate     0.828
+gendstat:           Villabruna           DevilsGate    -0.979
+
+## end of run

@@ -1,0 +1,40 @@
+#!/bin/sh
+#PBS -N f3_outgroup
+#PBS -S /bin/bash
+#PBS -l mem=10gb
+#PBS -l walltime=24:00:00
+#PBS -l nodes=1:ppn=1
+
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+
+#####
+# example usage:
+# HO.20191010.modern_aACA.merged
+# HO.20191014.curated_asian.outgroup_f3
+#####
+
+compute_f3="/home/cliu7/utils/AdmixTools/bin/qp3Pop"
+input_path="/home/cliu7/ancient_TBN/data/intermediate"
+param_path="/home/cliu7/ancient_TBN/data/support/params/fstat_params"
+output_path="/home/cliu7/ancient_TBN/data/output/fstat"
+
+input_prefix=${input_path}/$1
+pop_prefix=${param_path}/$2
+output_prefix=${output_path}/$2
+par_file=${pop_prefix}.par
+
+
+MAKE_PARAM_FILE(){
+    echo "genotypename: ${input_prefix}.geno" > $par_file
+    echo "snpname: ${input_prefix}.snp" >> $par_file
+    echo "indivname: ${input_prefix}.ind" >> $par_file
+    echo "popfilename: ${pop_prefix}.poptable" >> $par_file
+    echo "inbreed: NO" >> $par_file
+    echo "outgroupmode: YES" >> $par_file
+}
+
+MAKE_PARAM_FILE
+
+$compute_f3 -p $par_file > ${output_prefix}.txt

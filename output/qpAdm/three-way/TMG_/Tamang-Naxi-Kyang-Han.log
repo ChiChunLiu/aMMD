@@ -1,0 +1,194 @@
+/home/cliu7/utils/AdmixTools/bin/qpAdm: parameter file: temp/param/qpAdm_Tamang.Naxi.Kyang.Han.par16rqpmd8
+### THE INPUT PARAMETERS
+##PARAMETER NAME: VALUE
+DIR: data/intermediate
+S1: HO_all_merged.qpAdm
+indivname: data/intermediate/HO_all_merged.qpAdm.grouped.ind
+snpname: data/intermediate/HO_all_merged.qpAdm.snp
+genotypename: data/intermediate/HO_all_merged.qpAdm.geno
+popleft: temp/param/left.16rqpmd8
+popright: temp/param/right.16rqpmd8
+details: YES
+## qpAdm version: 810
+seed: -2057403610
+packed geno read OK
+end of inpack
+
+left pops:
+Tamang
+Naxi
+Kyang
+Han
+
+right pops:
+Mbuti
+Anatolia_N
+Ami
+Mixe
+Ganj_Dareh_N
+Onge
+Villabruna
+DevilsGate
+
+  0               Tamang    7
+  1                 Naxi    9
+  2                Kyang    7
+  3                  Han   33
+  4                Mbuti   10
+  5           Anatolia_N   25
+  6                  Ami   10
+  7                 Mixe   10
+  8         Ganj_Dareh_N    7
+  9                 Onge   12
+ 10           Villabruna    1
+ 11           DevilsGate    4
+jackknife block size:     0.050
+snps: 498990  indivs: 135
+number of blocks for block jackknife: 710
+## ncols: 498990
+coverage:               Tamang 498036
+coverage:                 Naxi 498990
+coverage:                Kyang 498984
+coverage:                  Han 498990
+coverage:                Mbuti 498990
+coverage:           Anatolia_N 498137
+coverage:                  Ami 498990
+coverage:                 Mixe 498990
+coverage:         Ganj_Dareh_N 457128
+coverage:                 Onge 498990
+coverage:           Villabruna 415230
+coverage:           DevilsGate 498716
+dof (jackknife):   583.436
+numsnps used: 419225
+codimension 1
+f4info: 
+f4rank: 2 dof:      5 chisq:     6.122 tail:          0.294529205 dofdiff:      7 chisqdiff:    -6.122 taildiff:                    1
+B:
+          scale     1.000     1.000 
+     Anatolia_N    -0.206     0.413 
+            Ami     1.946     1.810 
+           Mixe     0.917    -0.503 
+   Ganj_Dareh_N    -0.258     0.944 
+           Onge     0.334    -0.119 
+     Villabruna    -0.193    -0.150 
+     DevilsGate     1.454    -1.540 
+A:
+          scale   497.812  3921.019 
+           Naxi     0.980    -0.566 
+          Kyang     0.525    -1.518 
+            Han     1.328     0.612 
+
+
+full rank
+f4info: 
+f4rank: 3 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      5 chisqdiff:     6.122 taildiff:          0.294529205
+B:
+          scale     1.000     1.000     1.000 
+     Anatolia_N    -0.207     0.436     0.323 
+            Ami     1.952     1.530     2.091 
+           Mixe     0.919    -0.631    -0.894 
+   Ganj_Dareh_N    -0.246     1.016    -0.355 
+           Onge     0.350    -0.168    -1.104 
+     Villabruna    -0.205    -0.116     0.524 
+     DevilsGate     1.441    -1.731    -0.323 
+A:
+          scale   506.031  3423.945 11860.869 
+           Naxi     1.000    -0.381    -0.590 
+          Kyang     0.460    -1.650     1.476 
+            Han     1.337     0.365     0.687 
+
+
+best coefficients:   -11.459     6.623     5.836 
+Jackknife mean:     -4.080528407     3.189438775     1.891089632 
+      std. errors:     9.136     4.256     4.902 
+
+error covariance (* 1000000)
+  83465403  -38770865  -44694538 
+ -38770865   18109557   20661308 
+ -44694538   20661308   24033231 
+
+
+summ: Tamang    3      0.294529    -4.081     3.189     1.891 83465403 -38770865 -44694538 18109557 20661308 24033231 
+
+    fixed pat  wt  dof     chisq       tail prob
+          000  0     5     6.122        0.294529   -11.459     6.623     5.836  infeasible
+          001  1     6    51.034     2.91636e-09    -0.912     1.912    -0.000  infeasible
+          010  1     6    65.668      3.1509e-12     3.122    -0.000    -2.122  infeasible
+          100  1     6    87.806     8.64833e-17    -0.000     1.371    -0.371  infeasible
+          011  2     7   753.783               0     1.000    -0.000     0.000 
+          101  2     7   168.040               0     0.000     1.000     0.000 
+          110  2     7  1823.336               0     0.000    -0.000     1.000 
+best pat:          000         0.294529              -  -
+best pat:          001      2.91636e-09  chi(nested):    44.912 p-value for nested model:     2.06141e-11 infeasible
+best pat:          101      6.50023e-33  chi(nested):   117.006 p-value for nested model:     2.86138e-27
+
+coeffs:   -11.459     6.623     5.836 
+
+## dscore:: f_4(Base, Fit, Rbase, right2)
+## genstat:: f_4(Base, Fit, right1, right2)
+
+details:            Naxi      Anatolia_N    -0.000476   -3.296733
+details:           Kyang      Anatolia_N    -0.000359   -2.219777
+details:             Han      Anatolia_N    -0.000486   -4.023116
+dscore:      Anatolia_N f4:     0.000244 Z:     0.184502
+
+details:            Naxi             Ami     0.003617   21.704315
+details:           Kyang             Ami     0.001333    6.529718
+details:             Han             Ami     0.005478   35.295054
+dscore:             Ami f4:    -0.000644 Z:    -0.409669
+
+details:            Naxi            Mixe     0.001965   11.231421
+details:           Kyang            Mixe     0.001063    4.882551
+details:             Han            Mixe     0.002347   14.497495
+dscore:            Mixe f4:    -0.001780 Z:    -1.029202
+
+details:            Naxi    Ganj_Dareh_N    -0.000579   -3.591345
+details:           Kyang    Ganj_Dareh_N    -0.000753   -3.958522
+details:             Han    Ganj_Dareh_N    -0.000556   -3.897388
+dscore:    Ganj_Dareh_N f4:    -0.001595 Z:    -0.998883
+
+details:            Naxi            Onge     0.000790    4.679894
+details:           Kyang            Onge     0.000287    1.434378
+details:             Han            Onge     0.000864    5.816625
+dscore:            Onge f4:    -0.002106 Z:    -1.295592
+
+details:            Naxi      Villabruna    -0.000430   -2.015759
+details:           Kyang      Villabruna    -0.000055   -0.213656
+details:             Han      Villabruna    -0.000518   -2.702698
+dscore:      Villabruna f4:     0.001530 Z:     0.745068
+
+details:            Naxi      DevilsGate     0.003094   16.120589
+details:           Kyang      DevilsGate     0.002139    9.126294
+details:             Han      DevilsGate     0.003641   20.097828
+dscore:      DevilsGate f4:    -0.000035 Z:    -0.019021
+
+gendstat:                Mbuti           Anatolia_N     0.185
+gendstat:                Mbuti                  Ami    -0.410
+gendstat:                Mbuti                 Mixe    -1.029
+gendstat:                Mbuti         Ganj_Dareh_N    -0.999
+gendstat:                Mbuti                 Onge    -1.296
+gendstat:                Mbuti           Villabruna     0.745
+gendstat:                Mbuti           DevilsGate    -0.019
+gendstat:           Anatolia_N                  Ami    -0.568
+gendstat:           Anatolia_N                 Mixe    -1.273
+gendstat:           Anatolia_N         Ganj_Dareh_N    -1.359
+gendstat:           Anatolia_N                 Onge    -1.530
+gendstat:           Anatolia_N           Villabruna     0.727
+gendstat:           Anatolia_N           DevilsGate    -0.158
+gendstat:                  Ami                 Mixe    -0.755
+gendstat:                  Ami         Ganj_Dareh_N    -0.542
+gendstat:                  Ami                 Onge    -0.927
+gendstat:                  Ami           Villabruna     0.985
+gendstat:                  Ami           DevilsGate     0.383
+gendstat:                 Mixe         Ganj_Dareh_N     0.099
+gendstat:                 Mixe                 Onge    -0.184
+gendstat:                 Mixe           Villabruna     1.524
+gendstat:                 Mixe           DevilsGate     1.040
+gendstat:         Ganj_Dareh_N                 Onge    -0.293
+gendstat:         Ganj_Dareh_N           Villabruna     1.475
+gendstat:         Ganj_Dareh_N           DevilsGate     0.779
+gendstat:                 Onge           Villabruna     1.638
+gendstat:                 Onge           DevilsGate     1.111
+gendstat:           Villabruna           DevilsGate    -0.668
+
+## end of run

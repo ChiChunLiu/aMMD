@@ -1,0 +1,123 @@
+#!/bin/bash
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+
+###################################
+## Generate the final HO dataset ##
+###################################
+
+CONVERTF='/home/cliu7/utils/AdmixTools/bin/convertf'
+scratch_data='/scratch/cliu7/ancient_TBN/data'
+
+subset_eigenstrat () {
+    par=$(mktemp par.XXXXXX)
+    poplist=$(mktemp poplist.XXXXXX)
+    prefix="${scratch_data}/$2"
+    out=$3
+    echo $1 | tr " " "\n"  > ${poplist}
+    echo "genotypename: ${prefix}.geno" > $par
+    echo "snpname: ${prefix}.snp" >> $par
+    echo "indivname: ${prefix}.ind" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: ${out}.geno" >> $par
+    echo "snpoutname: ${out}.snp" >> $par
+    echo "indivoutname: ${out}.ind" >> $par
+    echo "poplistname: ${poplist}" >> $par
+    echo "hashcheck: NO" >> $par
+
+    $CONVERTF -p $par
+    rm $par $poplist
+}
+
+###################################################
+## Subset East Asian and CentralAsianSiberian    ##
+## populations in the HO dataset                 ##
+###################################################
+eigenstrat_source='raw/eigenstrat'
+full_eigenstrat_source='/scratch/cliu7/ancient_TBN/data/raw/eigenstrat'
+
+grep EastAsia "${scratch_data}/support/dataset_info/Lazaridis2014_population_information.csv" | \
+    cut -f1 -d, | sort | uniq > lazaridis_poplist
+grep CentralAsiaSiberia "${scratch_data}/support/dataset_info/Lazaridis2014_population_information.csv" | \
+    cut -f1 -d, | sort | uniq >> lazaridis_poplist
+lazaridis_poplist=$(<lazaridis_poplist)
+rm lazaridis_poplist
+lazaridis_poplist+=" Mbuti French Mixe" 
+subset_eigenstrat "${lazaridis_poplsit}" \
+                   ${eigenstrat_source}/EuropeAllData/data \
+                   ${full_eigenstrat_source}/EuropeAllData/data_subset
+
+############################
+##  subset ancients  data ##
+############################
+subset_eigenstrat "Anatolia_Neolithic" \
+		  ${eigenstrat_source}/Mathieson2015/full230 \
+		  ${full_eigenstrat_source}/Mathieson2015/full230_subset
+subset_eigenstrat "Ganj_Dareh_N" \
+		  ${eigenstrat_source}/Narasimhan2019/centralSouthAsia \
+		  ${full_eigenstrat_source}/Narasimhan2019/centralSouthAsia_subset
+subset_eigenstrat "Natufian" \
+		  ${eigenstrat_source}/NearEast/AncientLazaridis2016 \
+		  ${full_eigenstrat_source}/NearEast/AncientLazaridis2016_subset
+subset_eigenstrat "Villabruna Kostenki14 UstIshim" \
+		  ${eigenstrat_source}/Fu2016/51.2.2M \
+		  ${full_eigenstrat_source}/Fu2016/51.2.2M_subset
+
+#########################
+## merge all data sets ##
+#########################
+
+filelist1=$(mktemp poplist.XXXXXX)
+filelist2=$(mktemp poplist.XXXXXX)
+filelist3=$(mktemp poplist.XXXXXX)
+filelist_all=$(mktemp poplist.XXXXXX)
+
+ancients="${full_eigenstrat_source}/Mathieson2015/full230_subset \
+${full_eigenstrat_source}/Narasimhan2019/centralSouthAsia_subset \
+${full_eigenstrat_source}/NearEast/AncientLazaridis2016_subset \
+${full_eigenstrat_source}/Fu2016/51.2.2M_subset \
+${scratch_data}/intermediate/all_ancient_HO"
+
+moderns="${full_eigenstrat_source}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease \
+${full_eigenstrat_source}/EuropeAllData/data_subset"
+
+HA="${scratch_data}/tidy/final/humanorigin.sherpa_tbn.ADR \
+${scratch_data}/intermediate/lowcov_nepal_HO"
+
+echo $ancients | tr " " "\n"  > $filelist1
+echo $moderns | tr " " "\n"  > $filelist2
+echo $HA | tr " " "\n"  > $filelist3
+
+merge_prefix="/scratch/cliu7/ancient_TBN/data/intermediate/HO_filelist1.20191121"
+bash merge_files.sh ${filelist1} $merge_prefix
+echo "${merge_prefix}" >> $filelist_all
+rm ${filelist1}
+
+merge_prefix="/scratch/cliu7/ancient_TBN/data/intermediate/HO_filelist2.20191121"
+bash merge_files.sh ${filelist2} $merge_prefix YES
+echo "${merge_prefix}" >> $filelist_all
+rm ${filelist2}
+
+merge_prefix="/scratch/cliu7/ancient_TBN/data/intermediate/HO_filelist3.20191121"
+bash merge_files.sh ${filelist3} $merge_prefix YES
+echo "${merge_prefix}" >> $filelist_all
+rm ${filelist3}
+
+merge_prefix="/scratch/cliu7/ancient_TBN/data/tidy/final/HO_all_merged.20191121"
+bash merge_files.sh ${filelist_all} $merge_prefix
+rm ${filelist_all}
+
+# qpAdm:
+# Mbuti,Onge, Ami, Mixe [v]
+# Natufian ("Israel_Natufian" in Lazaridis et al 2016)
+# Iran_N (Ganj Dareh Narasimhan et al 2019),
+# Villabruna (Fu 2016),
+# Anatolia_N (Mathieson et al 2015)
+# DevilsGate (Siska 2019) [v]
+
+# qpGraph
+# Tianyuan
+# Hoabinhian
+# Loschbour
+# UstIshim

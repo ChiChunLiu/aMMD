@@ -1,0 +1,194 @@
+/home/cliu7/utils/AdmixTools/bin/qpAdm: parameter file: temp/param/qpAdm_Tamang.Naga.Sherpa.LC.Southeast_China.paraec1umhk
+### THE INPUT PARAMETERS
+##PARAMETER NAME: VALUE
+DIR: data/intermediate
+S1: HO_all_merged.qpAdm
+indivname: data/intermediate/HO_all_merged.qpAdm.grouped.ind
+snpname: data/intermediate/HO_all_merged.qpAdm.snp
+genotypename: data/intermediate/HO_all_merged.qpAdm.geno
+popleft: temp/param/left.aec1umhk
+popright: temp/param/right.aec1umhk
+details: YES
+## qpAdm version: 810
+seed: 653632957
+packed geno read OK
+end of inpack
+
+left pops:
+Tamang
+Naga
+Sherpa.LC
+Southeast_China
+
+right pops:
+Mbuti
+Anatolia_N
+Ami
+Mixe
+Ganj_Dareh_N
+Onge
+Villabruna
+DevilsGate
+
+  0               Tamang    7
+  1                 Naga    6
+  2            Sherpa.LC    9
+  3      Southeast_China   97
+  4                Mbuti   10
+  5           Anatolia_N   25
+  6                  Ami   10
+  7                 Mixe   10
+  8         Ganj_Dareh_N    7
+  9                 Onge   12
+ 10           Villabruna    1
+ 11           DevilsGate    4
+jackknife block size:     0.050
+snps: 498990  indivs: 198
+number of blocks for block jackknife: 710
+## ncols: 498990
+coverage:               Tamang 498036
+coverage:                 Naga 498990
+coverage:            Sherpa.LC 498990
+coverage:      Southeast_China 498990
+coverage:                Mbuti 498990
+coverage:           Anatolia_N 498137
+coverage:                  Ami 498990
+coverage:                 Mixe 498990
+coverage:         Ganj_Dareh_N 457128
+coverage:                 Onge 498990
+coverage:           Villabruna 415230
+coverage:           DevilsGate 498716
+dof (jackknife):   583.501
+numsnps used: 417759
+codimension 1
+f4info: 
+f4rank: 2 dof:      5 chisq:     3.218 tail:          0.666398842 dofdiff:      7 chisqdiff:    -3.218 taildiff:                    1
+B:
+          scale     1.000     1.000 
+     Anatolia_N    -0.259    -0.187 
+            Ami     2.023    -1.729 
+           Mixe     0.872     0.965 
+   Ganj_Dareh_N    -0.306    -0.361 
+           Onge     0.379    -0.083 
+     Villabruna    -0.225     0.209 
+     DevilsGate     1.339     1.692 
+A:
+          scale   513.810  2338.804 
+           Naga     0.953     0.927 
+      Sherpa.LC     0.627     1.047 
+Southeast_China     1.303    -1.022 
+
+
+full rank
+f4info: 
+f4rank: 3 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      5 chisqdiff:     3.218 taildiff:          0.666398842
+B:
+          scale     1.000     1.000     1.000 
+     Anatolia_N    -0.267    -0.243     0.463 
+            Ami     2.016    -1.540     1.994 
+           Mixe     0.880     1.043    -1.154 
+   Ganj_Dareh_N    -0.310    -0.404     0.583 
+           Onge     0.374    -0.081    -0.920 
+     Villabruna    -0.226     0.168    -0.338 
+     DevilsGate     1.342     1.812    -0.422 
+A:
+          scale   517.667  2288.008 13834.481 
+           Naga     0.944     0.771    -0.781 
+      Sherpa.LC     0.587     1.214     1.494 
+Southeast_China     1.328    -0.965     0.398 
+
+
+best coefficients:    -3.378     3.677     0.701 
+Jackknife mean:     -3.193131304     3.537286829     0.655844475 
+      std. errors:     0.850     0.641     0.248 
+
+error covariance (* 1000000)
+    723021    -535915    -187105 
+   -535915     410311     125604 
+   -187105     125604      61501 
+
+
+summ: Tamang    3      0.666399    -3.193     3.537     0.656 723021 -535915 -187105 410311 125604 61501 
+
+    fixed pat  wt  dof     chisq       tail prob
+          000  0     5     3.218        0.666399    -3.378     3.677     0.701  infeasible
+          001  1     6    24.076     0.000505782    -1.803     2.803    -0.000  infeasible
+          010  1     6   248.083               0     2.120    -0.000    -1.120  infeasible
+          100  1     6   148.072     1.97729e-29    -0.000     1.305    -0.305  infeasible
+          011  2     7   597.096               0     1.000     0.000     0.000 
+          101  2     7   226.633               0     0.000     1.000     0.000 
+          110  2     7  2153.396               0     0.000    -0.000     1.000 
+best pat:          000         0.666399              -  -
+best pat:          001      0.000505782  chi(nested):    20.858 p-value for nested model:     4.94739e-06 infeasible
+best pat:          101      2.57698e-45  chi(nested):   202.557 p-value for nested model:     5.77921e-46
+
+coeffs:    -3.378     3.677     0.701 
+
+## dscore:: f_4(Base, Fit, Rbase, right2)
+## genstat:: f_4(Base, Fit, right1, right2)
+
+details:            Naga      Anatolia_N    -0.000584   -3.675073
+details:       Sherpa.LC      Anatolia_N    -0.000380   -2.435872
+details: Southeast_China      Anatolia_N    -0.000571   -4.491704
+dscore:      Anatolia_N f4:     0.000176 Z:     0.295732
+
+details:            Naga             Ami     0.003077   16.653966
+details:       Sherpa.LC             Ami     0.001713    9.245561
+details: Southeast_China             Ami     0.005908   37.469836
+dscore:             Ami f4:     0.000046 Z:     0.067542
+
+details:            Naga            Mixe     0.002052   10.695378
+details:       Sherpa.LC            Mixe     0.001455    7.463319
+details: Southeast_China            Mixe     0.001805   10.900521
+dscore:            Mixe f4:    -0.000314 Z:    -0.438839
+
+details:            Naga    Ganj_Dareh_N    -0.000737   -4.025286
+details:       Sherpa.LC    Ganj_Dareh_N    -0.000497   -2.778834
+details: Southeast_China    Ganj_Dareh_N    -0.000612   -4.075535
+dscore:    Ganj_Dareh_N f4:     0.000232 Z:     0.338657
+
+details:            Naga            Onge     0.000728    3.898606
+details:       Sherpa.LC            Onge     0.000296    1.588858
+details: Southeast_China            Onge     0.000982    6.475345
+dscore:            Onge f4:    -0.000683 Z:    -0.997766
+
+details:            Naga      Villabruna    -0.000317   -1.324435
+details:       Sherpa.LC      Villabruna    -0.000202   -0.824054
+details: Southeast_China      Villabruna    -0.000665   -3.417268
+dscore:      Villabruna f4:    -0.000137 Z:    -0.149936
+
+details:            Naga      DevilsGate     0.003114   14.336423
+details:       Sherpa.LC      DevilsGate     0.002468   11.398146
+details: Southeast_China      DevilsGate     0.002693   14.083721
+dscore:      DevilsGate f4:     0.000442 Z:     0.546894
+
+gendstat:                Mbuti           Anatolia_N     0.296
+gendstat:                Mbuti                  Ami     0.068
+gendstat:                Mbuti                 Mixe    -0.439
+gendstat:                Mbuti         Ganj_Dareh_N     0.339
+gendstat:                Mbuti                 Onge    -0.998
+gendstat:                Mbuti           Villabruna    -0.150
+gendstat:                Mbuti           DevilsGate     0.547
+gendstat:           Anatolia_N                  Ami    -0.198
+gendstat:           Anatolia_N                 Mixe    -0.739
+gendstat:           Anatolia_N         Ganj_Dareh_N     0.098
+gendstat:           Anatolia_N                 Onge    -1.349
+gendstat:           Anatolia_N           Villabruna    -0.406
+gendstat:           Anatolia_N           DevilsGate     0.345
+gendstat:                  Ami                 Mixe    -0.587
+gendstat:                  Ami         Ganj_Dareh_N     0.249
+gendstat:                  Ami                 Onge    -1.082
+gendstat:                  Ami           Villabruna    -0.195
+gendstat:                  Ami           DevilsGate     0.608
+gendstat:                 Mixe         Ganj_Dareh_N     0.727
+gendstat:                 Mixe                 Onge    -0.523
+gendstat:                 Mixe           Villabruna     0.191
+gendstat:                 Mixe           DevilsGate     1.020
+gendstat:         Ganj_Dareh_N                 Onge    -1.213
+gendstat:         Ganj_Dareh_N           Villabruna    -0.416
+gendstat:         Ganj_Dareh_N           DevilsGate     0.238
+gendstat:                 Onge           Villabruna     0.598
+gendstat:                 Onge           DevilsGate     1.386
+gendstat:           Villabruna           DevilsGate     0.562
+
+## end of run

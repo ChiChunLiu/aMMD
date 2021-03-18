@@ -1,0 +1,65 @@
+#!/bin/sh
+#PBS -N f3_outgroup
+#PBS -S /bin/bash
+#PBS -l mem=10gb
+#PBS -l walltime=24:00:00
+#PBS -l nodes=1:ppn=1
+
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+module load parallel/20170122
+
+############################
+## Compute HO outgroup f3 ##
+############################
+
+outgroup='Mbuti'
+compute_f3="/home/cliu7/utils/AdmixTools/bin/qp3Pop"
+input_path="/scratch/cliu7/ancient_ACA/data/tidy/eigenstrat"
+param_path="/home/cliu7/ancient_ACA/data/params"
+output_path="/home/cliu7/ancient_ACA/output/fstats"
+pca_out_path="/home/cliu7/ancient_ACA/output/pca"
+
+set2_populations="${pca_out_path}/set2.present_day.txt"
+input_prefix=${input_path}/HO_all_merged
+pop_prefix=${param_path}/fstats/HO_all_merged.outgroup_f3
+output_prefix=${output_path}/HO_all_merged.outgroup_f3
+par_file=${pop_prefix}.par
+
+###############################
+# Create a population table   #
+###############################
+
+cp $set2_populations ${pop_prefix}.poplist.txt
+declare -a lowcov=("Chokhopani" "Rhirhi" "Lubrak" "Samdzong" "Mebrak" "Kyang" "Suila")
+
+rm -rf ${pop_prefix}.poplist2.txt
+for l in "${lowcov[@]}"; do
+    echo "$l" >> ${pop_prefix}.poplist.txt
+    echo "$l" >> ${pop_prefix}.poplist2.txt
+done
+
+rm -rf ${pop_prefix}.poptable.txt
+while read pop1; do
+    while read pop2; do
+	echo "$pop1 $pop2 $outgroup" >> ${pop_prefix}.poptable.txt
+    done < ${pop_prefix}.poplist2.txt
+done < ${pop_prefix}.poplist.txt
+
+
+make_param_file(){
+    pop=$1.poptable.txt
+    par_file=$1.par
+    echo "genotypename: ${input_prefix}.geno" > $par_file
+    echo "snpname: ${input_prefix}.snp" >> $par_file
+    echo "indivname: ${input_prefix}.ind" >> $par_file
+    echo "popfilename: ${pop}" >> $par_file
+    echo "inbreed: NO" >> $par_file
+    echo "outgroupmode: YES" >> $par_file
+}
+
+export -f make_param_file
+make_param_file ${pop_prefix}
+$compute_f3 -p ${pop_prefix}.par > ${output_prefix}.log
+rm $par_file

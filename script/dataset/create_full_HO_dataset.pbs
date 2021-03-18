@@ -1,0 +1,186 @@
+#!/bin/bash
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+
+###################################
+## Generate the final HO dataset ##
+###################################
+
+param_path="/home/cliu7/ancient_ACA/data/params/dataset"
+convertf='/home/cliu7/utils/AdmixTools/bin/convertf'
+scratch_data='/scratch/cliu7/ancient_ACA/data'
+eigenstrat_source='raw/eigenstrat'
+eigenstrat_source_full='/scratch/cliu7/ancient_ACA/data/raw/eigenstrat'
+
+subset_eigenstrat () {
+    local par=$(mktemp par.XXXXXX)
+    local poplist=$(mktemp poplist.XXXXXX)
+    local prefix="${scratch_data}/$2"
+    local out=$3
+    echo $1 | tr " " "\n"  > ${poplist}
+    echo "genotypename: ${prefix}.geno" > $par
+    echo "snpname: ${prefix}.snp" >> $par
+    echo "indivname: ${prefix}.ind" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: ${out}.geno" >> $par
+    echo "snpoutname: ${out}.snp" >> $par
+    echo "indivoutname: ${out}.ind" >> $par
+    echo "poplistname: ${poplist}" >> $par
+    echo "hashcheck: NO" >> $par
+
+    $convertf -p $par
+    rm $par
+}
+
+#################################################
+## Subset EastAsian, CentralAsianSiberian      ##
+## populations in the HO dataset, along with   ##
+
+## Mbuti, French, Mixe and Loschbour           ##
+#################################################
+
+# grep EastAsia "${scratch_data}/support/dataset_info/Lazaridis2014_population_information.csv" | \
+#     cut -f1 -d, | sort | uniq | tr "\n" " " > lazaridis_poplist
+# grep CentralAsiaSiberia "${scratch_data}/support/dataset_info/Lazaridis2014_population_information.csv" | \
+#     cut -f1 -d, | sort | uniq | tr "\n" " " >> lazaridis_poplist
+# lazaridis_poplist=$(< lazaridis_poplist)
+
+# rm lazaridis_poplist
+# lazaridis_poplist+=" Mbuti French Mixe Loschbour"
+# echo "$lazaridis_poplist"
+# subset_eigenstrat "$lazaridis_poplist" \
+#                    ${eigenstrat_source}/EuropeAllData/data \
+#                    ${eigenstrat_source_full}/EuropeAllData/data_subset
+
+
+# ######################
+# ## Subset Nakatsuka ##
+# ######################
+
+# # suff="geno"
+# # cp ${eigenstrat_source_full}/Nakatsuka2016/UnfilteredData/CCMB_All_OriginalIndiaHO_unfiltered_packed.packedancestrymap$suff \
+# #    ${eigenstrat_source_full}/Nakatsuka2016/UnfilteredData/CCMB_All_OriginalIndiaHO_unfiltered_packed.2.$suff
+# # suff="snp"
+# # cp ${eigenstrat_source_full}/Nakatsuka2016/UnfilteredData/CCMB_All_OriginalIndiaHO_unfiltered_packed.$suff \
+# #    ${eigenstrat_source_full}/Nakatsuka2016/UnfilteredData/CCMB_All_OriginalIndiaHO_unfiltered_packed.2.$suff
+
+# # cut -f1  ${scratch_data}/support/dataset_info/nakatsuka.population_info.txt > ${param_path}/nakatsuka_filtered_ind_list.txt
+# # echo "${param_path}/nakatsuka_filtered_ind_list.txt"
+
+# # python nakatsuka_mark_filtered_ind.py
+
+# # cut -f3  ${scratch_data}/support/dataset_info/nakatsuka.population_info.txt | \
+# #     sort | uniq |  tr "\n" " " > nakatsuka_poplist
+
+# # nakatsuka_poplist=$(< nakatsuka_poplist)
+
+
+#######################
+## Subset Ust'ishim  ##
+#######################
+
+subset_eigenstrat "Russia_Ust_Ishim_HG_published.DG Altai_Neanderthal_published.DG Denisova_published.DG Kazakhstan_Eneolithic_Botai" \
+                   ${eigenstrat_source}/Reich_compilation/v42.4.1240K_HO \
+                   ${eigenstrat_source_full}/Reich_compilation/v42.4.1240K_HO_ustishim
+
+sed -i 's/Russia_Ust_Ishim_HG_published.DG/Ust_Ishim/g' ${eigenstrat_source_full}/Reich_compilation/v42.4.1240K_HO_ustishim.ind
+sed -i 's/Yana_UP.SG/Yana_UP/g' ${eigenstrat_source_full}/Reich_compilation/v42.4.1240K_HO_ustishim.ind
+sed -i 's/Altai_Neanderthal_published.DG/Neanderthal/g' ${eigenstrat_source_full}/Reich_compilation/v42.4.1240K_HO_ustishim.ind
+sed -i 's/Denisova_published.DG/Denisovan/g' ${eigenstrat_source_full}/Reich_compilation/v42.4.1240K_HO_ustishim.ind
+
+
+# ###############
+# ## Sintashta ##
+# ###############
+# subset_eigenstrat "Sintashta_MLBA" \
+#                    ${eigenstrat_source}/Narasimhan2019/centralSouthAsia_subset \
+#                    ${eigenstrat_source_full}/Narasimhan2019/centralSouthAsia_subset
+
+# ########################################
+# ## Subset Tibetan and SEA Wang et al ###
+# ########################################
+
+
+# # grep Tibetan "${eigenstrat_source_full}/Wang2020/EastAsian_HO.ind" | \
+# #     awk '{print $3}' | sort | uniq | tr "\n" " "> tibetan_poplist
+# # tibetan_poplist=$(< tibetan_poplist)
+# # rm tibetan_poplist
+# # tibetan_poplist+=" Sherpa Qiang_Daofu Qiang_Danba"
+# # tibetan_poplist+=" Maonan Mulam Zhuang Dong_Guizhou Dong_Hunan Li Gelao"
+# # echo "$tibetan_poplist"
+# # subset_eigenstrat "$tibetan_poplist" \
+# #                    ${eigenstrat_source}/Wang2020/EastAsian_HO \
+# #                    ${eigenstrat_source_full}/Wang2020/EastAsian_HO_subset
+
+# for f in ind snp geno
+# do
+#     cp ${eigenstrat_source_full}/Wang2020/EastAsian_HO.$f \
+#     ${eigenstrat_source_full}/Wang2020/EastAsian_HO_subset.$f
+# done
+# sed -i 's/Sherpa/Sherpa.Wang/g' ${eigenstrat_source_full}/Wang2020/EastAsian_HO_subset.ind
+
+
+##############################
+## merge all data sets      ##
+## merge small files first  ##
+## so its a bit ugly        ##
+##############################
+
+filelist1=$(mktemp poplist.XXXXXX)
+filelist2=$(mktemp poplist.XXXXXX)
+filelist3=$(mktemp poplist.XXXXXX)
+filelist_all=$(mktemp poplist.XXXXXX)
+
+# use 6
+
+ancients="${eigenstrat_source_full}/Reich_compilation/v42.4.1240K_HO_ustishim \
+${scratch_data}/intermediate/published_ancient_HO \
+${scratch_data}/intermediate/aACA_HO3 \
+${scratch_data}/intermediate/botai_HO \
+${eigenstrat_source_full}/Wang2020/EastAsian_ancient_1240K \
+${eigenstrat_source_full}/Narasimhan2019/centralSouthAsia_subset \
+${eigenstrat_source_full}/NEChina_genotyping/NEChina.1240k
+${scratch_data}/intermediate/aACA.lowcov.1240K \
+"
+
+moderns="${eigenstrat_source_full}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease \
+${eigenstrat_source_full}/EuropeAllData/data_subset \
+${eigenstrat_source_full}/Wang2020/EastAsian_HO_subset"
+
+HA="${scratch_data}/intermediate/HA_autosomes.genotype.HO \
+${scratch_data}/intermediate/lowcov_nepal_HO"
+
+echo $ancients | tr " " "\n"  > $filelist1
+echo $moderns | tr " " "\n"  > $filelist2
+echo $HA | tr " " "\n"  > $filelist3
+
+################################################################################
+## format for merge_files.sh filelist outputPrefix two_pops?? check_strand??  ##
+################################################################################
+
+merge_prefix="/scratch/cliu7/ancient_ACA/data/intermediate/HO_filelist1.tmp"
+bash merge_files.sh ${filelist1} $merge_prefix NO NO
+echo "${merge_prefix}" >> $filelist_all
+rm ${filelist1}
+
+merge_prefix="/scratch/cliu7/ancient_ACA/data/intermediate/HO_filelist2.tmp"
+#bash merge_files.sh ${filelist2} $merge_prefix NO NO
+echo "${merge_prefix}" >> $filelist_all
+rm ${filelist2}
+
+merge_prefix="/scratch/cliu7/ancient_ACA/data/intermediate/HO_filelist3.tmp"
+#bash merge_files.sh ${filelist3} $merge_prefix YES NO
+echo "${merge_prefix}" >> $filelist_all
+rm ${filelist3}
+
+merge_prefix="/scratch/cliu7/ancient_ACA/data/tidy/eigenstrat/HO_all_merged"
+bash merge_files.sh ${filelist_all} $merge_prefix NO NO
+rm ${filelist_all}
+
+
+python rename_uppermustang.py
+mv ${merge_prefix}.UM_renamed.ind ${merge_prefix}.ind
+python mark_filtered_samples.py
+mv ${merge_prefix}.marked.ind ${merge_prefix}.ind
+

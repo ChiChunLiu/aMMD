@@ -1,0 +1,193 @@
+/home/cliu7/utils/AdmixTools/bin/qpAdm: parameter file: temp/param/qpAdm_UpperMustang.LC.Mebrak.Mala.parppzjc2qs
+### THE INPUT PARAMETERS
+##PARAMETER NAME: VALUE
+DIR: data/intermediate
+S1: HO_all_merged.qpAdm
+indivname: data/intermediate/HO_all_merged.qpAdm.grouped.ind
+snpname: data/intermediate/HO_all_merged.qpAdm.snp
+genotypename: data/intermediate/HO_all_merged.qpAdm.geno
+popleft: temp/param/left.ppzjc2qs
+popright: temp/param/right.ppzjc2qs
+details: YES
+## qpAdm version: 810
+seed: -1649683290
+packed geno read OK
+end of inpack
+
+left pops:
+UpperMustang.LC
+Mebrak
+Mala
+
+right pops:
+Mbuti
+Anatolia_N
+Ami
+Mixe
+Ganj_Dareh_N
+Onge
+Villabruna
+DevilsGate
+Sherpa.LC
+
+  0      UpperMustang.LC   11
+  1               Mebrak    8
+  2                 Mala   11
+  3                Mbuti   10
+  4           Anatolia_N   25
+  5                  Ami   10
+  6                 Mixe   10
+  7         Ganj_Dareh_N    7
+  8                 Onge   12
+  9           Villabruna    1
+ 10           DevilsGate    4
+ 11            Sherpa.LC    9
+jackknife block size:     0.050
+snps: 498990  indivs: 118
+number of blocks for block jackknife: 710
+## ncols: 498990
+coverage:      UpperMustang.LC 498990
+coverage:               Mebrak 498978
+coverage:                 Mala 498990
+coverage:                Mbuti 498990
+coverage:           Anatolia_N 498137
+coverage:                  Ami 498990
+coverage:                 Mixe 498990
+coverage:         Ganj_Dareh_N 457128
+coverage:                 Onge 498990
+coverage:           Villabruna 415230
+coverage:           DevilsGate 498716
+coverage:            Sherpa.LC 498990
+dof (jackknife):   583.374
+numsnps used: 419435
+codimension 1
+f4info: 
+f4rank: 1 dof:      7 chisq:    21.074 tail:        0.00366161224 dofdiff:      9 chisqdiff:   -21.074 taildiff:                    1
+B:
+          scale     1.000 
+     Anatolia_N    -0.291 
+            Ami     1.351 
+           Mixe     0.932 
+   Ganj_Dareh_N    -0.438 
+           Onge     0.291 
+     Villabruna    -0.120 
+     DevilsGate     1.488 
+      Sherpa.LC     1.648 
+A:
+          scale   183.913 
+         Mebrak     0.005 
+           Mala    -1.414 
+
+
+full rank
+f4info: 
+f4rank: 2 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      7 chisqdiff:    21.074 taildiff:        0.00366161224
+B:
+          scale     1.000     1.000 
+     Anatolia_N    -0.289     0.805 
+            Ami     1.353     1.040 
+           Mixe     0.928     0.999 
+   Ganj_Dareh_N    -0.439    -0.921 
+           Onge     0.296     0.982 
+     Villabruna    -0.120    -0.241 
+     DevilsGate     1.488    -1.599 
+      Sherpa.LC     1.648    -0.920 
+A:
+          scale   182.943  7600.420 
+         Mebrak    -0.013    -1.386 
+           Mala    -1.414    -0.280 
+
+
+best coefficients:     0.997     0.003 
+Jackknife mean:      0.996638125     0.003361875 
+      std. errors:     0.010     0.010 
+
+error covariance (* 1000000)
+       101       -101 
+      -101        101 
+
+
+summ: UpperMustang.LC    2      0.003662     0.997     0.003   101  -101   101 
+
+    fixed pat  wt  dof     chisq       tail prob
+           00  0     7    21.074      0.00366161     0.997     0.003 
+           01  1     8    21.036      0.00705277     1.000    -0.000 
+           10  1     8  5782.462               0     0.000     1.000 
+best pat:           00       0.00366161              -  -
+best pat:           01       0.00705277  chi(nested):    -0.039 p-value for nested model:            -nan
+
+coeffs:     0.997     0.003 
+
+## dscore:: f_4(Base, Fit, Rbase, right2)
+## genstat:: f_4(Base, Fit, right1, right2)
+
+details:          Mebrak      Anatolia_N    -0.000094   -0.594691
+details:            Mala      Anatolia_N     0.002194   10.701486
+dscore:      Anatolia_N f4:    -0.000087 Z:    -0.547640
+
+details:          Mebrak             Ami    -0.000257   -1.362489
+details:            Mala             Ami    -0.010523  -43.824897
+dscore:             Ami f4:    -0.000291 Z:    -1.548057
+
+details:          Mebrak            Mixe    -0.000244   -1.267045
+details:            Mala            Mixe    -0.007218  -28.673504
+dscore:            Mixe f4:    -0.000267 Z:    -1.391684
+
+details:          Mebrak    Ganj_Dareh_N     0.000219    1.162668
+details:            Mala    Ganj_Dareh_N     0.003420   14.704382
+dscore:    Ganj_Dareh_N f4:     0.000230 Z:     1.222266
+
+details:          Mebrak            Onge    -0.000233   -1.295914
+details:            Mala            Onge    -0.002375  -10.484865
+dscore:            Onge f4:    -0.000240 Z:    -1.338660
+
+details:          Mebrak      Villabruna     0.000041    0.167727
+details:            Mala      Villabruna     0.000923    2.835256
+dscore:      Villabruna f4:     0.000044 Z:     0.180050
+
+details:          Mebrak      DevilsGate     0.000261    1.191561
+details:            Mala      DevilsGate    -0.011472  -41.261592
+dscore:      DevilsGate f4:     0.000222 Z:     1.014332
+
+details:          Mebrak       Sherpa.LC     0.000029    0.155197
+details:            Mala       Sherpa.LC    -0.012746  -54.348045
+dscore:       Sherpa.LC f4:    -0.000014 Z:    -0.075932
+
+gendstat:                Mbuti           Anatolia_N    -0.548
+gendstat:                Mbuti                  Ami    -1.548
+gendstat:                Mbuti                 Mixe    -1.392
+gendstat:                Mbuti         Ganj_Dareh_N     1.222
+gendstat:                Mbuti                 Onge    -1.339
+gendstat:                Mbuti           Villabruna     0.180
+gendstat:                Mbuti           DevilsGate     1.014
+gendstat:                Mbuti            Sherpa.LC    -0.076
+gendstat:           Anatolia_N                  Ami    -1.190
+gendstat:           Anatolia_N                 Mixe    -0.971
+gendstat:           Anatolia_N         Ganj_Dareh_N     2.048
+gendstat:           Anatolia_N                 Onge    -0.912
+gendstat:           Anatolia_N           Villabruna     0.629
+gendstat:           Anatolia_N           DevilsGate     1.489
+gendstat:           Anatolia_N            Sherpa.LC     0.427
+gendstat:                  Ami                 Mixe     0.142
+gendstat:                  Ami         Ganj_Dareh_N     2.590
+gendstat:                  Ami                 Onge     0.293
+gendstat:                  Ami           Villabruna     1.325
+gendstat:                  Ami           DevilsGate     2.887
+gendstat:                  Ami            Sherpa.LC     2.009
+gendstat:                 Mixe         Ganj_Dareh_N     2.347
+gendstat:                 Mixe                 Onge     0.139
+gendstat:                 Mixe           Villabruna     1.230
+gendstat:                 Mixe           DevilsGate     2.617
+gendstat:                 Mixe            Sherpa.LC     1.492
+gendstat:         Ganj_Dareh_N                 Onge    -2.361
+gendstat:         Ganj_Dareh_N           Villabruna    -0.740
+gendstat:         Ganj_Dareh_N           DevilsGate    -0.033
+gendstat:         Ganj_Dareh_N            Sherpa.LC    -1.202
+gendstat:                 Onge           Villabruna     1.119
+gendstat:                 Onge           DevilsGate     2.228
+gendstat:                 Onge            Sherpa.LC     1.290
+gendstat:           Villabruna           DevilsGate     0.627
+gendstat:           Villabruna            Sherpa.LC    -0.230
+gendstat:           DevilsGate            Sherpa.LC    -1.258
+
+## end of run

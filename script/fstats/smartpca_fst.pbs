@@ -1,0 +1,44 @@
+#!/bin/sh
+#PBS -N smartpca_Fst
+#PBS -S /bin/bash
+#PBS -l mem=20gb
+#PBS -l walltime=24:00:00
+#PBS -l nodes=1:ppn=1
+
+ARRAY=$1
+POP=$2
+
+SMARTPCA="/home/cliu7/utils/EIG-6.1.4/bin/smartpca"
+INPUT_PATH="/home/cliu7/ancient_TBN/data/intermediate"
+PAR_PATH="/home/cliu7/ancient_TBN/data/support/dataset_info/pca_params"
+OUT_PATH="/home/cliu7/ancient_TBN/data/output/pca"
+
+INPUT_PREFIX="${INPUT_PATH}/${ARRAY}.modern_aACA.merged"
+OUT_PREFIX="${OUT_PATH}/${ARRAY}.${POP}"
+PAR="${PAR_PATH}/${ARRAY}.${POP}.par"
+
+MAKE_PARAM_FILE(){
+   
+    echo "genotypename: ${INPUT_PREFIX}.geno" > $PAR
+    echo "snpname: ${INPUT_PREFIX}.snp" >> $PAR
+    echo "indivname: ${INPUT_PREFIX}.ind" >> $PAR
+    echo "badsnpname: ${PAR_PATH}/${ARRAY}.pca.${POP}.badsnp" >> $PAR
+    echo "poplistname: ${PAR_PATH}/${ARRAY}.pca.${POP}.population_list.txt" >> $PAR
+    echo "shrinkmode: YES" >> $PAR
+    echo "lsqproject: YES" >> $PAR
+    echo "snpweightoutname: ${OUT_PREFIX}.snpeigs" >> $PAR
+    echo "evecoutname: ${OUT_PREFIX}.eigs" >> $PAR
+    echo "evaloutname: ${OUT_PREFIX}.eval" >> $PAR
+    echo "phylipoutname: ${OUT_PREFIX}.fst" >> $PAR
+    echo "numoutevec: 1" >> $PAR
+    echo "numoutlieriter: 0" >> $PAR
+    echo "outlieroutname: ${OUT_PREFIX}.out">> $PAR
+    echo "altnormstyle: NO" >> $PAR
+    echo "missingmode: NO" >> $PAR
+    echo "nsnpldregress: 0" >> $PAR
+    echo "noxdata: YES" >> $PAR
+    echo "nomalexhet: YES" >> $PAR
+}
+
+MAKE_PARAM_FILE 
+$SMARTPCA -p $PAR

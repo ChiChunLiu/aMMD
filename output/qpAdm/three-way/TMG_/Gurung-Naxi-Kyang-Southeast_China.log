@@ -1,0 +1,194 @@
+/home/cliu7/utils/AdmixTools/bin/qpAdm: parameter file: temp/param/qpAdm_Gurung.Naxi.Kyang.Southeast_China.par_sttsnin
+### THE INPUT PARAMETERS
+##PARAMETER NAME: VALUE
+DIR: data/intermediate
+S1: HO_all_merged.qpAdm
+indivname: data/intermediate/HO_all_merged.qpAdm.grouped.ind
+snpname: data/intermediate/HO_all_merged.qpAdm.snp
+genotypename: data/intermediate/HO_all_merged.qpAdm.geno
+popleft: temp/param/left._sttsnin
+popright: temp/param/right._sttsnin
+details: YES
+## qpAdm version: 810
+seed: -930154328
+packed geno read OK
+end of inpack
+
+left pops:
+Gurung
+Naxi
+Kyang
+Southeast_China
+
+right pops:
+Mbuti
+Anatolia_N
+Ami
+Mixe
+Ganj_Dareh_N
+Onge
+Villabruna
+DevilsGate
+
+  0               Gurung    5
+  1                 Naxi    9
+  2                Kyang    7
+  3      Southeast_China   97
+  4                Mbuti   10
+  5           Anatolia_N   25
+  6                  Ami   10
+  7                 Mixe   10
+  8         Ganj_Dareh_N    7
+  9                 Onge   12
+ 10           Villabruna    1
+ 11           DevilsGate    4
+jackknife block size:     0.050
+snps: 498990  indivs: 197
+number of blocks for block jackknife: 710
+## ncols: 498990
+coverage:               Gurung 498036
+coverage:                 Naxi 498990
+coverage:                Kyang 498984
+coverage:      Southeast_China 498990
+coverage:                Mbuti 498990
+coverage:           Anatolia_N 498137
+coverage:                  Ami 498990
+coverage:                 Mixe 498990
+coverage:         Ganj_Dareh_N 457128
+coverage:                 Onge 498990
+coverage:           Villabruna 415230
+coverage:           DevilsGate 498716
+dof (jackknife):   583.500
+numsnps used: 417977
+codimension 1
+f4info: 
+f4rank: 2 dof:      5 chisq:    12.876 tail:         0.0245718937 dofdiff:      7 chisqdiff:   -12.876 taildiff:                    1
+B:
+          scale     1.000     1.000 
+     Anatolia_N    -0.175    -0.110 
+            Ami     2.337    -1.406 
+           Mixe     0.657     0.922 
+   Ganj_Dareh_N    -0.217    -0.439 
+           Onge     0.348    -0.077 
+     Villabruna    -0.132     0.413 
+     DevilsGate     0.943     1.947 
+A:
+          scale   766.666  3392.999 
+           Naxi     0.925     1.123 
+          Kyang     0.226     1.154 
+Southeast_China     1.447    -0.639 
+
+
+full rank
+f4info: 
+f4rank: 3 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      5 chisqdiff:    12.876 taildiff:         0.0245718937
+B:
+          scale     1.000     1.000     1.000 
+     Anatolia_N    -0.166    -0.103     0.217 
+            Ami     2.329    -1.188    -2.002 
+           Mixe     0.668     0.946     0.943 
+   Ganj_Dareh_N    -0.164    -0.517     1.207 
+           Onge     0.366    -0.024     0.309 
+     Villabruna    -0.144     0.483    -0.658 
+     DevilsGate     0.959     2.045     0.265 
+A:
+          scale   812.581  2963.059  5263.309 
+           Naxi     0.947     1.035    -0.172 
+          Kyang     0.022     1.341    -1.470 
+Southeast_China     1.450    -0.359    -0.900 
+
+
+best coefficients:    -1.493     1.824     0.670 
+Jackknife mean:     -1.357324594     1.744508964     0.612815630 
+      std. errors:     0.625     0.357     0.279 
+
+error covariance (* 1000000)
+    391068    -220195    -170873 
+   -220195     127188      93007 
+   -170873      93007      77865 
+
+
+summ: Gurung    3      0.024572    -1.357     1.745     0.613 391068 -220195 -170873 127188 93007 77865 
+
+    fixed pat  wt  dof     chisq       tail prob
+          000  0     5    12.876       0.0245719    -1.493     1.824     0.670  infeasible
+          001  1     6    33.668     7.79819e-06    -0.113     1.113    -0.000  infeasible
+          010  1     6   111.429     1.02307e-21     1.777    -0.000    -0.777  infeasible
+          100  1     6    35.986     2.77401e-06    -0.000     0.995     0.005 
+          011  2     7   309.633               0     1.000    -0.000     0.000 
+          101  2     7    36.042     7.11835e-06     0.000     1.000     0.000 
+          110  2     7  1309.600               0     0.000    -0.000     1.000 
+best pat:          000        0.0245719              -  -
+best pat:          100      2.77401e-06  chi(nested):    23.110 p-value for nested model:     1.52973e-06
+best pat:          101      7.11835e-06  chi(nested):     0.056 p-value for nested model:        0.812939
+
+coeffs:    -1.493     1.824     0.670 
+
+## dscore:: f_4(Base, Fit, Rbase, right2)
+## genstat:: f_4(Base, Fit, right1, right2)
+
+details:            Naxi      Anatolia_N    -0.000221   -1.505047
+details:           Kyang      Anatolia_N    -0.000104   -0.609615
+details: Southeast_China      Anatolia_N    -0.000315   -2.324504
+dscore:      Anatolia_N f4:    -0.000070 Z:    -0.240727
+
+details:            Naxi             Ami     0.002392   13.942122
+details:           Kyang             Ami     0.000102    0.509583
+details: Southeast_China             Ami     0.004669   27.714622
+dscore:             Ami f4:    -0.000261 Z:    -0.761590
+
+details:            Naxi            Mixe     0.001103    6.218172
+details:           Kyang            Mixe     0.000198    0.896613
+details: Southeast_China            Mixe     0.000936    5.210852
+dscore:            Mixe f4:    -0.000658 Z:    -1.700918
+
+details:            Naxi    Ganj_Dareh_N    -0.000393   -2.217316
+details:           Kyang    Ganj_Dareh_N    -0.000567   -2.809375
+details: Southeast_China    Ganj_Dareh_N    -0.000423   -2.535095
+dscore:    Ganj_Dareh_N f4:    -0.000731 Z:    -2.106025
+
+details:            Naxi            Onge     0.000429    2.519323
+details:           Kyang            Onge    -0.000075   -0.377118
+details: Southeast_China            Onge     0.000618    3.755280
+dscore:            Onge f4:    -0.000364 Z:    -1.053415
+
+details:            Naxi      Villabruna     0.000035    0.153585
+details:           Kyang      Villabruna     0.000411    1.516489
+details: Southeast_China      Villabruna    -0.000198   -0.922837
+dscore:      Villabruna f4:     0.000563 Z:     1.235836
+
+details:            Naxi      DevilsGate     0.001856    8.954783
+details:           Kyang      DevilsGate     0.000899    3.715816
+details: Southeast_China      DevilsGate     0.001445    7.404437
+dscore:      DevilsGate f4:    -0.000165 Z:    -0.406658
+
+gendstat:                Mbuti           Anatolia_N    -0.241
+gendstat:                Mbuti                  Ami    -0.762
+gendstat:                Mbuti                 Mixe    -1.701
+gendstat:                Mbuti         Ganj_Dareh_N    -2.106
+gendstat:                Mbuti                 Onge    -1.053
+gendstat:                Mbuti           Villabruna     1.236
+gendstat:                Mbuti           DevilsGate    -0.407
+gendstat:           Anatolia_N                  Ami    -0.586
+gendstat:           Anatolia_N                 Mixe    -1.716
+gendstat:           Anatolia_N         Ganj_Dareh_N    -2.183
+gendstat:           Anatolia_N                 Onge    -0.872
+gendstat:           Anatolia_N           Villabruna     1.632
+gendstat:           Anatolia_N           DevilsGate    -0.240
+gendstat:                  Ami                 Mixe    -1.228
+gendstat:                  Ami         Ganj_Dareh_N    -1.224
+gendstat:                  Ami                 Onge    -0.302
+gendstat:                  Ami           Villabruna     1.737
+gendstat:                  Ami           DevilsGate     0.275
+gendstat:                 Mixe         Ganj_Dareh_N    -0.175
+gendstat:                 Mixe                 Onge     0.750
+gendstat:                 Mixe           Villabruna     2.555
+gendstat:                 Mixe           DevilsGate     1.275
+gendstat:         Ganj_Dareh_N                 Onge     0.947
+gendstat:         Ganj_Dareh_N           Villabruna     2.784
+gendstat:         Ganj_Dareh_N           DevilsGate     1.266
+gendstat:                 Onge           Villabruna     1.894
+gendstat:                 Onge           DevilsGate     0.459
+gendstat:           Villabruna           DevilsGate    -1.410
+
+## end of run

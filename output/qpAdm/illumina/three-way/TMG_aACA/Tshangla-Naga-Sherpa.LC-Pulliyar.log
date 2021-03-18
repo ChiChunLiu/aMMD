@@ -1,0 +1,212 @@
+/home/cliu7/utils/AdmixTools/bin/qpAdm: parameter file: temp/param/qpAdm_Tshangla.Naga.Sherpa.LC.Pulliyar.par5gkbkp2f
+### THE INPUT PARAMETERS
+##PARAMETER NAME: VALUE
+DIR: data/intermediate
+S1: illumina_all_merged.qpAdm
+indivname: data/intermediate/illumina_all_merged.qpAdm.grouped2.ind
+snpname: data/intermediate/illumina_all_merged.qpAdm.snp
+genotypename: data/intermediate/illumina_all_merged.qpAdm.geno
+popleft: temp/param/left.5gkbkp2f
+popright: temp/param/right.5gkbkp2f
+details: YES
+## qpAdm version: 810
+seed: 324609751
+packed geno read OK
+end of inpack
+
+left pops:
+Tshangla
+Naga
+Sherpa.LC
+Pulliyar
+
+right pops:
+Mbuti
+Anatolia_N
+Ami.DG
+Mixe.DG
+Ganj_Dareh_N
+Onge.DG
+Villabruna
+DevilsGate
+aACA
+
+  0             Tshangla   19
+  1                 Naga    4
+  2            Sherpa.LC    9
+  3             Pulliyar    5
+  4                Mbuti   13
+  5           Anatolia_N   25
+  6               Ami.DG    2
+  7              Mixe.DG    3
+  8         Ganj_Dareh_N    7
+  9              Onge.DG    2
+ 10           Villabruna    1
+ 11           DevilsGate    4
+ 12                 aACA   32
+jackknife block size:     0.050
+snps: 234294  indivs: 126
+number of blocks for block jackknife: 548
+## ncols: 234294
+coverage:             Tshangla 234294
+coverage:                 Naga 234294
+coverage:            Sherpa.LC 117394
+coverage:             Pulliyar 234294
+coverage:                Mbuti 234294
+coverage:           Anatolia_N 117047
+coverage:               Ami.DG 228808
+coverage:              Mixe.DG 228825
+coverage:         Ganj_Dareh_N 104920
+coverage:              Onge.DG 228703
+coverage:           Villabruna  86810
+coverage:           DevilsGate 117364
+coverage:                 aACA 120350
+dof (jackknife):   466.532
+numsnps used: 83620
+codimension 1
+f4info: 
+f4rank: 2 dof:      6 chisq:     2.923 tail:          0.818408482 dofdiff:      8 chisqdiff:    -2.923 taildiff:                    1
+B:
+          scale     1.000     1.000 
+     Anatolia_N    -0.148     1.022 
+         Ami.DG     1.358    -1.087 
+        Mixe.DG     1.031    -0.578 
+   Ganj_Dareh_N    -0.280     0.891 
+        Onge.DG     0.313    -0.182 
+     Villabruna    -0.090     0.388 
+     DevilsGate     1.562     0.118 
+           aACA     1.564     2.109 
+A:
+          scale   164.516  3880.605 
+           Naga     0.131    -1.183 
+      Sherpa.LC     0.056     1.265 
+       Pulliyar    -1.726    -0.029 
+
+
+full rank
+f4info: 
+f4rank: 3 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      6 chisqdiff:     2.923 taildiff:          0.818408482
+B:
+          scale     1.000     1.000     1.000 
+     Anatolia_N    -0.124     1.132     0.358 
+         Ami.DG     1.337    -1.669    -0.000 
+        Mixe.DG     1.021    -1.020    -0.148 
+   Ganj_Dareh_N    -0.256     1.153    -0.249 
+        Onge.DG     0.318    -0.141    -0.923 
+     Villabruna    -0.077     0.647    -0.261 
+     DevilsGate     1.565    -0.723    -0.483 
+           aACA     1.592     0.777     2.576 
+A:
+          scale   169.150  2538.758  7109.268 
+           Naga     0.123    -0.625    -0.961 
+      Sherpa.LC     0.135     1.330    -0.912 
+       Pulliyar    -1.722     0.916    -1.115 
+
+
+best coefficients:     0.489     0.459     0.052 
+Jackknife mean:      0.487822534     0.459932225     0.052245241 
+      std. errors:     0.072     0.073     0.007 
+
+error covariance (* 1000000)
+      5205      -5246         41 
+     -5246       5340        -94 
+        41        -94         53 
+
+
+summ: Tshangla    3      0.818408     0.488     0.460     0.052  5205 -5246    41  5340   -94    53 
+
+    fixed pat  wt  dof     chisq       tail prob
+          000  0     6     2.923        0.818408     0.489     0.459     0.052 
+          001  1     7    78.600     2.65664e-14    -2.861     3.861    -0.000  infeasible
+          010  1     7    26.099     0.000483505     0.937    -0.000     0.063 
+          100  1     7    33.888     1.80737e-05     0.000     0.951     0.049 
+          011  2     8    65.205     4.39539e-11     1.000     0.000    -0.000 
+          101  2     8    62.368     1.59562e-10     0.000     1.000    -0.000 
+          110  2     8  3431.383               0     0.000    -0.000     1.000 
+best pat:          000         0.818408              -  -
+best pat:          010      0.000483505  chi(nested):    23.176 p-value for nested model:     1.47834e-06
+best pat:          101      1.59562e-10 not nested
+
+coeffs:     0.489     0.459     0.052 
+
+## dscore:: f_4(Base, Fit, Rbase, right2)
+## genstat:: f_4(Base, Fit, right1, right2)
+
+details:            Naga      Anatolia_N    -0.000525   -2.006066
+details:       Sherpa.LC      Anatolia_N     0.000411    1.777141
+details:        Pulliyar      Anatolia_N     0.001515    4.198981
+dscore:      Anatolia_N f4:     0.000011 Z:     0.055467
+
+details:            Naga          Ami.DG     0.001303    4.184367
+details:       Sherpa.LC          Ami.DG     0.000178    0.618911
+details:        Pulliyar          Ami.DG    -0.014362  -31.984593
+dscore:          Ami.DG f4:    -0.000031 Z:    -0.136518
+
+details:            Naga         Mixe.DG     0.000941    2.880027
+details:       Sherpa.LC         Mixe.DG     0.000256    0.911859
+details:        Pulliyar         Mixe.DG    -0.010871  -23.044540
+dscore:         Mixe.DG f4:     0.000009 Z:     0.041374
+
+details:            Naga    Ganj_Dareh_N    -0.000507   -1.659919
+details:       Sherpa.LC    Ganj_Dareh_N     0.000411    1.410514
+details:        Pulliyar    Ganj_Dareh_N     0.002937    6.891655
+dscore:    Ganj_Dareh_N f4:     0.000094 Z:     0.403994
+
+details:            Naga         Onge.DG     0.000403    1.293091
+details:       Sherpa.LC         Onge.DG     0.000279    0.975211
+details:        Pulliyar         Onge.DG    -0.003253   -7.211339
+dscore:         Onge.DG f4:     0.000155 Z:     0.656747
+
+details:            Naga      Villabruna    -0.000268   -0.659023
+details:       Sherpa.LC      Villabruna     0.000348    0.953999
+details:        Pulliyar      Villabruna     0.000953    1.641455
+dscore:      Villabruna f4:     0.000078 Z:     0.264170
+
+details:            Naga      DevilsGate     0.001304    3.753247
+details:       Sherpa.LC      DevilsGate     0.000905    2.889029
+details:        Pulliyar      DevilsGate    -0.016386  -33.570135
+dscore:      DevilsGate f4:     0.000197 Z:     0.766999
+
+details:            Naga            aACA     0.000566    2.154043
+details:       Sherpa.LC            aACA     0.001326    5.859716
+details:        Pulliyar            aACA    -0.016489  -41.847399
+dscore:            aACA f4:     0.000024 Z:     0.126879
+
+gendstat:                Mbuti           Anatolia_N     0.055
+gendstat:                Mbuti               Ami.DG    -0.137
+gendstat:                Mbuti              Mixe.DG     0.041
+gendstat:                Mbuti         Ganj_Dareh_N     0.404
+gendstat:                Mbuti              Onge.DG     0.657
+gendstat:                Mbuti           Villabruna     0.264
+gendstat:                Mbuti           DevilsGate     0.767
+gendstat:                Mbuti                 aACA     0.127
+gendstat:           Anatolia_N               Ami.DG    -0.190
+gendstat:           Anatolia_N              Mixe.DG    -0.007
+gendstat:           Anatolia_N         Ganj_Dareh_N     0.420
+gendstat:           Anatolia_N              Onge.DG     0.636
+gendstat:           Anatolia_N           Villabruna     0.291
+gendstat:           Anatolia_N           DevilsGate     0.790
+gendstat:           Anatolia_N                 aACA     0.074
+gendstat:               Ami.DG              Mixe.DG     0.176
+gendstat:               Ami.DG         Ganj_Dareh_N     0.505
+gendstat:               Ami.DG              Onge.DG     0.802
+gendstat:               Ami.DG           Villabruna     0.349
+gendstat:               Ami.DG           DevilsGate     0.949
+gendstat:               Ami.DG                 aACA     0.305
+gendstat:              Mixe.DG         Ganj_Dareh_N     0.342
+gendstat:              Mixe.DG              Onge.DG     0.596
+gendstat:              Mixe.DG           Villabruna     0.228
+gendstat:              Mixe.DG           DevilsGate     0.783
+gendstat:              Mixe.DG                 aACA     0.075
+gendstat:         Ganj_Dareh_N              Onge.DG     0.237
+gendstat:         Ganj_Dareh_N           Villabruna    -0.054
+gendstat:         Ganj_Dareh_N           DevilsGate     0.393
+gendstat:         Ganj_Dareh_N                 aACA    -0.322
+gendstat:              Onge.DG           Villabruna    -0.253
+gendstat:              Onge.DG           DevilsGate     0.155
+gendstat:              Onge.DG                 aACA    -0.650
+gendstat:           Villabruna           DevilsGate     0.371
+gendstat:           Villabruna                 aACA    -0.196
+gendstat:           DevilsGate                 aACA    -0.855
+
+## end of run

@@ -1,0 +1,40 @@
+#!/bin/sh
+#PBS -N D-stat
+#PBS -S /bin/bash
+#PBS -l mem=5gb
+#PBS -l walltime=24:00:00
+
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+
+compute_f4="/home/cliu7/utils/AdmixTools/bin/qpDstat"
+input_path="/scratch/cliu7/ancient_ACA/data/tidy/eigenstrat"
+par_path="/home/cliu7/ancient_ACA/data/params/fstats"
+output_path="/home/cliu7/ancient_ACA/output/fstats"
+
+
+MAKE_PARAM_FILE(){
+    input_prefix="${input_path}/$1"
+    table_prefix="${par_path}/$2"
+    PAR=$3
+    echo "genotypename: ${input_prefix}.geno" > $PAR
+    echo "snpname: ${input_prefix}.snp" >> $PAR
+    echo "indivname: ${input_prefix}.grouped.ind" >> $PAR
+    echo "popfilename: ${table_prefix}.txt" >> $PAR
+    echo "printsd: YES" >> $PAR
+}
+
+par=$(mktemp par.XXXXX)
+MAKE_PARAM_FILE HO_all_merged.qpAdm ancient_relationship $par
+output_prefix="${output_path}/ancient_relationship"
+#$compute_f4 -p $par > ${output_prefix}.log
+rm $par
+grep result ${output_prefix}.log | awk '{print $2,$3,$4,$5,$6,$7,$8,$9}' > ${output_prefix}.table.txt
+
+par=$(mktemp par.XXXXX)
+MAKE_PARAM_FILE HO_all_merged.qpAdm modern_relationship $par
+output_prefix="${output_path}/modern_relationship"
+$compute_f4 -p $par > ${output_prefix}.log
+rm $par
+grep result ${output_prefix}.log | awk '{print $2,$3,$4,$5,$6,$7,$8,$9}' > ${output_prefix}.table.txt

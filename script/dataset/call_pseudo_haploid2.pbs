@@ -1,0 +1,60 @@
+#!/bin/bash
+#PBS -N pseudo-haploid
+#PBS -S /bin/bash
+#PBS -l mem=20gb
+#PBS -l walltime=08:00:00 
+#PBS -l nodes=1:ppn=1
+
+module load gcc/6.2.0
+module load parallel/20170122
+source activate /scratch/cliu7/miniconda_env/bioinformatics
+
+call_pseudo_haploid() {
+    project='/home/cliu7/ancient_ACA'
+    scratch='/scratch/cliu7/ancient_ACA'
+    ref_genome='/gpfs/data/novembre-lab/reference_genome/hs37d5.fa'
+    param="${project}/data/params/pseudo_haploid"
+    geno_dir="${scratch}/data/intermediate"
+
+    snp_prefix=${param}/$1
+    bam_prefix=${param}/$2
+    sample_id=${param}/$3
+    final_ind_prefix=${param}/$4
+    out=${geno_dir}/$5
+
+    # produce snp file
+    # awk -vOFS=$'\t' '{print $2,$4,$5","$6}' ${snp_prefix}.snp | 
+    # 	bgzip -c > ${snp_prefix}.tsv.gz
+    # tabix -s1 -b2 -e2 ${snp_prefix}.tsv.gz
+    # awk -vOFS=$'\t' '{print $2,$4}' ${snp_prefix}.snp > ${snp_prefix}.pos
+
+    # pileup and random draw representative haploid
+    samtools mpileup -RB -q30 -Q30 \
+	     -b ${bam_prefix}.txt \
+	     -l ${snp_prefix}.pos \
+	     -f ${ref_genome} | \
+	pileupCaller --seed $6 \
+		     --sampleNameFile ${sample_id}.txt \
+		     --samplePopName POP \
+		     -f ${snp_prefix}.snp \
+		     -o EigenStrat \
+		     -e ${out}
+
+    # rename and clean up
+    for i in geno snp ind
+    do
+	mv ${out}.${i}.txt ${out}.${i}
+    done
+
+    cp ${final_ind_prefix}.txt  ${out}.ind
+
+}
+
+export -f call_pseudo_haploid
+#parallel -j1 call_pseudo_haploid HumanOrigins2583 {}_bam {}_sample {}_ind {}_HO 123 ::: $1
+parallel -j1 call_pseudo_haploid 1240K_HO_autosomes {}_bam {}_sample {}_ind {}_1240K_HOauto 123 ::: aACA
+#parallel -j1 call_pseudo_haploid HumanOrigins2583 {}_bam {}_sample {}_ind {}_HO 123 ::: published_ancient
+#parallel -j1 call_pseudo_haploid HumanOrigins2583 {}_bam {}_sample {}_ind {}_HO 123 ::: botai
+#parallel -j1 call_pseudo_haploid HumanOrigins2583 {}_bam {}_sample {}_ind {}_HO 123 ::: aACA
+#parallel -j1 call_pseudo_haploid Arciero2018.ddup {}_bam {}_sample {}_ind {}_illumina 123 ::: aACA published_ancient lowcov_nepal
+

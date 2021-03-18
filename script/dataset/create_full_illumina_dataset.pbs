@@ -1,0 +1,98 @@
+#!/bin/bash
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+
+###################################
+## Generate the final HO dataset ##
+###################################
+
+param_path="/home/cliu7/ancient_ACA/data/params/dataset"
+convertf='/home/cliu7/utils/AdmixTools/bin/convertf'
+scratch_data='/scratch/cliu7/ancient_ACA/data'
+eigenstrat_source='raw/eigenstrat'
+eigenstrat_source_full='/scratch/cliu7/ancient_ACA/data/raw/eigenstrat'
+
+subset_eigenstrat () {
+    local par=$(mktemp par.XXXXXX)
+    local poplist=$(mktemp poplist.XXXXXX)
+    local prefix="${scratch_data}/$2"
+    local out=$3
+    echo $1 | tr " " "\n"  > ${poplist}
+    echo "genotypename: ${prefix}.geno" > $par
+    echo "snpname: ${prefix}.snp" >> $par
+    echo "indivname: ${prefix}.ind" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: ${out}.geno" >> $par
+    echo "snpoutname: ${out}.snp" >> $par
+    echo "indivoutname: ${out}.ind" >> $par
+    echo "poplistname: ${poplist}" >> $par
+    echo "hashcheck: NO" >> $par
+
+    $convertf -p $par
+    rm $par
+}
+
+
+###################################
+## Subset Choongwon compilation ###
+###################################
+# choongwon_poplist="Mbuti Ami.DG Mixe.DG Onge.DG Pulliyar Dai Han Pathan Kankanaey Karitiana Naga Naxi Yi"
+choongwon_poplist="Onge.DG Kankanaey"
+# subset_eigenstrat "$choongwon_poplist" \
+#                    ${eigenstrat_source}/Choongwon_compilation/1KG.1240K.Illumina.249K.180824 \
+#                    ${eigenstrat_source_full}/Choongwon_compilation/1KG.1240K.Illumina.249K.180824.subset
+
+
+############################
+## merge all data sets    ##
+############################
+
+filelist1=$(mktemp poplist.XXXXXX)
+filelist2=$(mktemp poplist.XXXXXX)
+filelist_all=$(mktemp poplist.XXXXXX)
+
+set1="${scratch_data}/raw/text/hgdp/output/HGDP_940 \
+${scratch_data}/raw/text/Metspalu2011/output/Metspalu_illumina610K \
+${scratch_data}/raw/text/Metspalu2011/output/Metspalu_illumina650K \
+${scratch_data}/raw/plink/Arciero2018/Arciero2018.ddup \
+${scratch_data}/raw/plink/Jeong2018/Sherpa_batch1_Omni1M_Quad_151218.allele_filled.unrelated \
+${scratch_data}/raw/plink/Jeong2018/Tibetan_batch1_high_density_151218.allele_filled"
+
+set2="${scratch_data}/raw/plink/Tibetan_Wang/output/Tibetan_Wang.ddup.allele_fixed_Arciero2018.ddup \
+${scratch_data}/raw/plink/Tibetan_Beall/Tibetan_Beall.ddup.allele_fixed_Arciero2018.ddup \
+${scratch_data}/raw/wgs/sgdp.Arciero2018_pos.autosomes \
+${eigenstrat_source_full}/Choongwon_compilation/1KG.1240K.Illumina.249K.180824.subset \
+${scratch_data}/intermediate/lowcov_nepal_illumina \
+${scratch_data}/intermediate/aACA_illumina_auto \
+${scratch_data}/intermediate/aACA.lowcov.1240K \
+${scratch_data}/intermediate/published_ancient_illumina \
+${eigenstrat_source_full}/NEChina_genotyping/NEChina.1240k" 
+
+
+echo $set1 | tr " " "\n"  > $filelist1
+echo $set2 | tr " " "\n"  > $filelist2
+
+################################################################################
+## format for merge_files.sh filelist outputPrefix two_pops?? check_strand??  ##
+################################################################################
+
+merge_prefix="/scratch/cliu7/ancient_ACA/data/intermediate/illumina_filelist1.tmp"
+#bash merge_files.sh ${filelist1} $merge_prefix NO YES
+echo "${merge_prefix}" >> $filelist_all
+rm ${filelist1}
+
+merge_prefix="/scratch/cliu7/ancient_ACA/data/intermediate/illumina_filelist2.tmp"
+bash merge_files.sh ${filelist2} $merge_prefix NO YES
+echo "${merge_prefix}" >> $filelist_all
+rm ${filelist2}
+
+merge_prefix="/scratch/cliu7/ancient_ACA/data/tidy/eigenstrat/illumina_all_merged"
+bash merge_files.sh ${filelist_all} $merge_prefix YES YES
+rm ${filelist_all}
+
+python rename_uppermustang_illumina.py -i ${merge_prefix}
+mv ${merge_prefix}.UM_renamed.ind ${merge_prefix}.ind
+
+python mark_filtered_samples_illumina.py
+mv ${merge_prefix}.marked.ind ${merge_prefix}.ind

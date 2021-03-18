@@ -1,0 +1,153 @@
+#!/bin/sh
+#PBS -N pca
+#PBS -S /bin/bash
+#PBS -l mem=20gb
+#PBS -l walltime=24:00:00
+#PBS -l nodes=1:ppn=5
+
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+module load plink/1.90
+
+subset=${1:-NO}
+convertf='/home/cliu7/utils/AdmixTools/bin/convertf'
+smartpca="/home/cliu7/utils/EIG-6.1.4/bin/smartpca"
+input_path="/scratch/cliu7/ancient_ACA/data/tidy/eigenstrat"
+par_path="/home/cliu7/ancient_ACA/data/params/pca"
+out_path="/home/cliu7/ancient_ACA/output/pca"
+scratch_data="/scratch/cliu7/ancient_ACA/data"
+
+
+make_param_file () {
+    local INPUT_PREFIX=$1
+    local OUT_PREFIX=$2
+    local PAR=$3
+    local poplist=$4
+    echo "genotypename: ${INPUT_PREFIX}.geno" > $PAR
+    echo "snpname: ${INPUT_PREFIX}.snp" >> $PAR
+    echo "indivname: ${INPUT_PREFIX}.ind" >> $PAR
+    #echo "badsnpname: 
+    echo "poplistname: ${poplist}" >> $PAR
+    echo "shrinkmode: YES" >> $PAR
+    echo "lsqproject: YES" >> $PAR
+    echo "snpweightoutname: ${OUT_PREFIX}.snpeigs" >> $PAR
+    echo "evecoutname: ${OUT_PREFIX}.eigs" >> $PAR
+    echo "evaloutname: ${OUT_PREFIX}.eval" >> $PAR
+    echo "phylipoutname: ${OUT_PREFIX}.fst" >> $PAR
+    echo "numoutevec: 6" >> $PAR
+    echo "numoutlieriter: 0" >> $PAR
+    echo "outlieroutname: ${OUT_PREFIX}.out">> $PAR
+    echo "altnormstyle: NO" >> $PAR
+    #echo "inbreed: YES" >> $PAR
+    echo "nsnpldregress: 0" >> $PAR
+    echo "noxdata: YES" >> $PAR
+    echo "nomalexhet: YES" >> $PAR
+}
+
+
+subset_eigenstrat () {
+    local par=$(mktemp par.XXXXXX)
+    local poplist=$1
+    local prefix=$2
+    local out=$3
+    echo "genotypename: ${prefix}.geno" > $par
+    echo "snpname: ${prefix}.snp" >> $par
+    echo "indivname: ${prefix}.ind" >> $par
+    echo "outputformat: PACKEDPED" >> $par
+    echo "genotypeoutname: ${out}.bed" >> $par
+    echo "snpoutname: ${out}.bim" >> $par
+    echo "indivoutname: ${out}.fam" >> $par
+    echo "poplistname: ${poplist}" >> $par
+    echo "hashcheck: NO" >> $par
+    echo "familynames: NO" >> $par
+
+    $convertf -p $par
+    rm $par
+}
+
+subset_ind2pop () {
+    local par=$(mktemp par.XXXXXX)
+    local poplist=$1
+    local prefix=$2
+    local out=$3
+    echo "genotypename: ${prefix}.geno" > $par
+    echo "snpname: ${prefix}.snp" >> $par
+    echo "indivname: ${prefix}.ind" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: ${out}.geno" >> $par
+    echo "snpoutname: ${out}.snp" >> $par
+    echo "indivoutname: ${out}.ind" >> $par
+    echo "poplistname: ${poplist}" >> $par
+    echo "hashcheck: NO" >> $par
+    echo "familynames: NO" >> $par
+
+    $convertf -p $par
+    rm $par ${out}.geno ${out}.snp
+}
+
+
+plink2eigenstrat () {
+    local par=$(mktemp par.XXXXXX)
+    local prefix=$1
+    echo "genotypename: ${prefix}.bed" > $par
+    echo "snpname: ${prefix}.bim" >> $par
+    echo "indivname: ${prefix}.fam" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: ${prefix}.geno" >> $par
+    echo "snpoutname: ${prefix}.snp" >> $par
+    echo "indivoutname: ${prefix}.ind" >> $par
+    echo "hashcheck: NO" >> $par
+    echo "familynames: NO" >> $par
+
+    $convertf -p $par
+    rm $par
+}
+
+#####################################
+# subset Illumina PCA populations  ##
+#####################################
+
+present_day_pops="${par_path}/illumina.curatedAsian.present_day.txt"
+poplist="${out_path}/illumina.curatedAsian.population_list.txt"
+
+cp $present_day_pops $poplist
+ancients="Chokhopani Rhirhi Lubrak Mebrak Kyang Samdzong"
+echo "$ancients" | tr " " "\n" >> $poplist
+
+if [ "$subset" = YES ]; then
+    echo "start subsetting set 2 populations..."
+    curatedAsian_tmp_prefix="${scratch_data}/intermediate/illumina_all_merged.description.tmp"
+    subset_eigenstrat $poplist \
+		      ${input_path}/illumina_all_merged \
+ 		      $curatedAsian_tmp_prefix
+    subset_ind2pop  $poplist \
+		    ${input_path}/illumina_all_merged \
+		    $curatedAsian_tmp_prefix
+
+    # convert to plink for LD pruning and maf thresholding
+    curatedAsian_file_prefix="${scratch_data}/intermediate/illumina_all_merged.description"
+    plink --bfile $curatedAsian_tmp_prefix \
+	  --allow-no-sex \
+	  --maf 0.01 \
+	  --indep-pairwise 200 25 0.2 \
+	  --make-bed \
+	  --out $curatedAsian_file_prefix
+
+    # convert back to eigenstrat for PCA
+    plink2eigenstrat $curatedAsian_file_prefix
+    cp ${curatedAsian_tmp_prefix}.ind ${curatedAsian_file_prefix}.ind
+fi
+
+###############
+## run pca  ###
+###############
+
+curatedAsian_file_prefix="${scratch_data}/intermediate/illumina_all_merged.description"
+par=$(mktemp par.XXXXX)
+in_prefix="${curatedAsian_file_prefix}"
+out_prefix="${out_path}/illumina_all_merged.curatedAsian"
+make_param_file $in_prefix $out_prefix $par $present_day_pops
+echo "runnning pca"
+$smartpca -p $par
+rm tmp $par

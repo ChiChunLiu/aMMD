@@ -1,0 +1,38 @@
+#!/bin/bash
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+
+scratch="/scratch/cliu7/ancient_TBN/data"
+output_dir="/scratch/cliu7/ancient_TBN/data/tidy/final"
+param="/home/cliu7/ancient_TBN/data/support/params/dataset"
+
+
+##############################
+## merge illumina datasets  ##
+##############################
+
+illumina_all="${param}/illumina_genotype_pseudo_haploid_file.txt"
+out="${output_dir}/illumina_all.modern_aACA.merged.20191121"
+echo "${scratch}/illumina_all.20191008.genotype" > ${illumina_all}
+echo "${scratch}/lowcov_nepal_illumina" >> ${illumina_all}
+echo "${scratch}/all_ancient_illumina" >> ${illumina_all}
+bash merge_files.sh $illumina_all $out
+
+
+
+
+
+##################################
+## merge human origin datasets  ##
+##################################
+
+HO_all="${param}/HO_genotype_pseudo_haploid_file.txt"
+out="${output_dir}/HO.modern_aACA.merged.20191121"
+echo "${scratch}/raw/eigenstrat/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease" > ${illumina_all}
+echo "${scratch}/raw/eigenstrat/EuropeAllData/data" >> ${illumina_all}
+echo "${scratch}/tidy/final/humanorigin.sherpa_tbn.ADR" >> ${illumina_all}
+echo "${scratch}/intermediate/lowcov_nepal_HO" >> ${illumina_all}
+echo "${scratch}/intermediate/HO.Reich.selected_ancients" >> ${illumina_all}
+echo "${scratch}/intermediate/all_ancient_HO" >> ${illumina_all}
+bash merge_files.sh $HO_all $out

@@ -1,0 +1,84 @@
+#!/bin/bash
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+
+CONVERTF='/home/cliu7/utils/AdmixTools/bin/convertf'
+scratch_data='/scratch/cliu7/ancient_ACA/data'
+
+subset_eigenstrat () {
+    par=$(mktemp par.XXXXXX)
+    poplist=$(mktemp poplist.XXXXXX)
+    prefix="${scratch_data}/$2"
+    out="$3"
+    echo "$1" | tr " " "\n"  > ${poplist}
+    echo "genotypename: ${prefix}.geno" > $par
+    echo "snpname: ${prefix}.snp" >> $par
+    echo "indivname: ${prefix}.ind" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: ${out}.geno" >> $par
+    echo "snpoutname: ${out}.snp" >> $par
+    echo "indivoutname: ${out}.ind" >> $par
+    echo "poplistname: ${poplist}" >> $par
+    echo "hashcheck: NO" >> $par
+
+    $CONVERTF -p $par
+    rm $par $poplist
+}
+
+##################################
+## Subsetting Eigenstrat data  ###
+##       only ancients         ###
+##################################
+cd ${scratch_data}
+
+DR_dir='raw/eigenstrat'
+full_DR_path='/scratch/cliu7/ancient_ACA/data/raw/eigenstrat'
+
+##################################
+## Subsetting modern data     ####
+##################################
+# subset_eigenstrat "Mbuti Ami Han Naxi Yi Loschbour Mixe" \
+# 		  ${DR_dir}/EuropeAllData/data \
+# 		  ${full_DR_path}/EuropeAllData/data_qpsubset
+
+# cp ${full_DR_path}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease.packedancestrymapgeno \
+#    ${full_DR_path}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease.geno
+# subset_eigenstrat "Nagaseema Chakeshanega Onge" \
+# 		  ${DR_dir}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease \
+# 		  ${full_DR_path}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease_qpsubset
+
+subset_eigenstrat "DevilsGate Tianyuan" \
+		  intermediate/published_ancient_HO5 \
+		  ${scratch_data}/intermediate/published_ancient_HO_subset
+
+# subset_eigenstrat "YR_MN Upper_YR_LN" \
+# 		  ${DR_dir}/NEChina_genotyping/NEChina.1240k \
+# 		  ${full_DR_path}/NEChina_genotyping/NEChina.1240k_subset \
+
+#################################
+## merge data into a subset #####
+## for qpgraph/qpAdm         ####
+#################################
+
+cd /home/cliu7/ancient_ACA/script/dataset
+
+filelist=$(mktemp poplist.XXXXXX)
+ancients="${scratch_data}/intermediate/published_ancient_HO_subset \
+${full_DR_path}/NEChina_genotyping/NEChina.1240k_subset"	
+moderns="${full_DR_path}/EuropeAllData/data_qpsubset \
+${full_DR_path}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease_qpsubset"
+
+echo $moderns | tr " " "\n"  > $filelist
+echo $ancients | tr " " "\n"  >> $filelist
+echo "${scratch_data}/intermediate/aACA_HO" >> $filelist
+
+merge_prefix="/home/cliu7/ancient_ACA/data/intermediate/HO_all_merged.qpsubset"
+bash merge_files.sh $filelist $merge_prefix NO NO
+rm $filelist
+
+############################################
+## rename Nagaseema, Chakeshanega Naga   ###
+############################################
+
+sed 's/Nagaseema/Naga/g' ${merge_prefix}.ind | sed 's/Chakeshanega/Naga/g' > $merge_prefix.grouped.ind

@@ -1,0 +1,58 @@
+#!/bin/bash
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+
+###################################
+## Generate the final HO dataset ##
+###################################
+
+param_path="/home/cliu7/ancient_ACA/data/params/dataset"
+convertf='/home/cliu7/utils/AdmixTools/bin/convertf'
+scratch_data='/scratch/cliu7/ancient_ACA/data'
+eigenstrat_source='raw/eigenstrat'
+eigenstrat_source_full='/scratch/cliu7/ancient_ACA/data/raw/eigenstrat'
+
+subset_eigenstrat () {
+    local par=$(mktemp par.XXXXXX)
+    local poplist=$(mktemp poplist.XXXXXX)
+    local prefix="${scratch_data}/$2"
+    local out=$3
+    echo $1 | tr " " "\n"  > ${poplist}
+    echo "genotypename: ${prefix}.geno" > $par
+    echo "snpname: ${prefix}.snp" >> $par
+    echo "indivname: ${prefix}.ind" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: ${out}.geno" >> $par
+    echo "snpoutname: ${out}.snp" >> $par
+    echo "indivoutname: ${out}.ind" >> $par
+    echo "poplistname: ${poplist}" >> $par
+    echo "hashcheck: NO" >> $par
+
+    $convertf -p $par
+    rm $par
+}
+
+
+# subset_eigenstrat "Altai_Neanderthal_published.DG Denisova_published.DG" \
+#                    ${eigenstrat_source}/Reich_compilation/v42.4.1240K_HO \
+#                    ${eigenstrat_source_full}/Reich_compilation/v42.4.1240K_HO_archaic
+
+# sed -i 's/Altai_Neanderthal_published.DG/Neanderthal/g' ${eigenstrat_source_full}/Reich_compilation/v42.4.1240K_HO_archaic.ind
+# sed -i 's/Denisova_published.DG/Denisovan/g' ${eigenstrat_source_full}/Reich_compilation/v42.4.1240K_HO_archaic.ind
+
+
+filelist_all=$(mktemp poplist.XXXXXX)
+
+all_files="${eigenstrat_source_full}/Reich_compilation/v42.4.1240K_HO_archaic \
+${scratch_data}/intermediate/Nepal_SUI \
+${scratch_data}/intermediate/aACA.lowcov.1240K \
+${scratch_data}/intermediate/ccliu_200711/HO_all_merged \
+"
+
+echo ${all_files} | tr " " "\n"  > ${filelist_all}
+
+
+merge_prefix="/scratch/cliu7/ancient_ACA/data/tidy/eigenstrat/HO_all_merged"
+bash merge_files.sh ${filelist_all} $merge_prefix NO NO
+rm ${filelist_all}

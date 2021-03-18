@@ -1,0 +1,61 @@
+#!/bin/bash
+
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+
+
+convertf='/home/cliu7/utils/AdmixTools/bin/convertf'
+file_path='/scratch/cliu7/ancient_ACA/data/tidy/eigenstrat'
+out_path='/home/cliu7/ancient_ACA/data/intermediate'
+param_path="/home/cliu7/ancient_ACA/data/params/dataset"
+
+convert_file () {
+    par=$(mktemp merge_par.XXXXXX)
+
+    prefix=$1
+    out=$1.worldwide
+    poplist=$2
+    
+    echo "input: $prefix" > $par
+    echo "poplist: $poplist" >> $par
+    echo "genotypename: $prefix.geno" >> $par
+    echo "snpname: $prefix.snp" >> $par
+    # echo "indivname: $prefix.ind" >> $par
+    echo "indivname: $prefix.ind" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: $out.geno" >> $par
+    echo "snpoutname: $out.snp" >> $par
+    echo "indivoutname: $out.ind" >> $par
+    echo "poplistname: $poplist" >> $par
+
+    $convertf -p $par
+    rm $par
+}
+
+
+cat ${param_path}/worldwide_f4_population.txt > ${param_path}/worldwide_f4_population_list.txt
+
+
+grep Tibetan_ ${file_path}/HO_all_merged.ind | awk {'print $3'} | sort | \
+    uniq >> ${param_path}/worldwide_f4_population_list.txt
+
+convert_file ${file_path}/HO_all_merged ${param_path}/worldwide_f4_population_list.txt
+
+
+#####################################################
+## format for merge_files.sh filelist outputPrefix ##
+#####################################################
+
+filelist=$(mktemp poplist.XXXXXX)
+
+files="/scratch/cliu7/ancient_ACA/data/raw/eigenstrat/Reich_compilation/v42.4.1240K_HO \
+${file_path}/HO_all_merged.worldwide"
+
+echo $files | tr " " "\n"  > $filelist
+
+
+merge_prefix="/scratch/cliu7/ancient_ACA/data/intermediate/HO_all_merged.deepAncestry"
+bash merge_files.sh ${filelist} $merge_prefix YES NO
+rm ${filelist}
+

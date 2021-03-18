@@ -1,0 +1,96 @@
+#!/bin/bash
+module load gcc/6.2.0
+module load gsl/2.3
+module load openblas/0.2.19
+
+CONVERTF='/home/cliu7/utils/AdmixTools/bin/convertf'
+scratch_data='/scratch/cliu7/ancient_ACA/data'
+
+subset_eigenstrat () {
+    par=$(mktemp par.XXXXXX)
+    poplist=$(mktemp poplist.XXXXXX)
+    prefix="${scratch_data}/$2"
+    out="$3"
+    echo "$1" | tr " " "\n"  > ${poplist}
+    echo "genotypename: ${prefix}.geno" > $par
+    echo "snpname: ${prefix}.snp" >> $par
+    echo "indivname: ${prefix}.ind" >> $par
+    echo "outputformat: PACKEDANCESTRYMAP" >> $par
+    echo "genotypeoutname: ${out}.geno" >> $par
+    echo "snpoutname: ${out}.snp" >> $par
+    echo "indivoutname: ${out}.ind" >> $par
+    echo "poplistname: ${poplist}" >> $par
+    echo "hashcheck: NO" >> $par
+
+    $CONVERTF -p $par
+    rm $par $poplist
+}
+
+##################################
+## Subsetting Eigenstrat data  ###
+##       only ancients         ###
+##################################
+
+DR_dir='raw/eigenstrat'
+full_DR_path='/scratch/cliu7/ancient_ACA/data/raw/eigenstrat'
+
+subset_eigenstrat 'Anatolia_Neolithic' \
+		  ${DR_dir}/Mathieson2015/full230 \
+		  ${full_DR_path}/Mathieson2015/full230_subset
+subset_eigenstrat "Sintashta_MLBA Ganj_Dareh_N" \
+		  ${DR_dir}/Narasimhan2019/centralSouthAsia \
+		  ${full_DR_path}/Narasimhan2019/centralSouthAsia_subset
+subset_eigenstrat 'Natufian' \
+		  ${DR_dir}/NearEast/AncientLazaridis2016 \
+		  ${full_DR_path}/NearEast/AncientLazaridis2016_subset
+subset_eigenstrat "Villabruna Kostenki12 Kostenki14 UstIshim" \
+		  ${DR_dir}/Fu2016/51.2.2M \
+		  ${full_DR_path}/Fu2016/51.2.2M_subset
+
+##################################
+## Subsetting modern data     ####
+##################################
+subset_eigenstrat "Mbuti Onge Ami Han Naxi Yi Loschbour Mixe" \
+		  ${DR_dir}/EuropeAllData/data \
+		  ${full_DR_path}/EuropeAllData/data_qpsubset
+
+cp ${full_DR_path}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease.packedancestrymapgeno \
+   ${full_DR_path}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease.geno
+subset_eigenstrat "Nagaseema Chakeshanega" \
+		  ${DR_dir}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease \
+		  ${full_DR_path}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease_qpsubset
+
+subset_eigenstrat "DevilsGate" \
+		  intermediate/published_ancient_HO \
+		  ${scratch_data}/intermediate/published_ancient_HO_subset
+
+#################################
+## merge data into a subset #####
+## for qpgraph/qpAdm         ####
+#################################
+
+filelist=$(mktemp poplist.XXXXXX)
+ancients="${full_DR_path}/Mathieson2015/full230_subset \
+${full_DR_path}/Narasimhan2019/centralSouthAsia_subset \
+${full_DR_path}/NearEast/AncientLazaridis2016_subset \
+${full_DR_path}/Fu2016/51.2.2M_subset \
+${scratch_data}/intermediate/published_ancient_HO_subset"
+moderns="${full_DR_path}/EuropeAllData/data_qpsubset \
+${full_DR_path}/Nakatsuka2016/FilteredData/IndiaHO_dataforrelease_qpsubset"
+
+echo "${scratch_data}/intermediate/lowcov_nepal_HO" > $filelist
+echo $moderns | tr " " "\n"  >> $filelist
+echo $ancients | tr " " "\n"  >> $filelist
+echo "${scratch_data}/intermediate/aACA_HO" >> $filelist
+
+merge_prefix="/home/cliu7/ancient_ACA/data/intermediate/HO_all_merged.qpsubset"
+bash merge_files.sh $filelist $merge_prefix
+rm $filelist
+
+############################################
+## rename Nagaseema, Chakeshanega Naga   ###
+## Anatolia_Neolithic into Anatolia_N    ###
+############################################
+
+sed 's/Nagaseema/Naga/g' ${merge_prefix}.ind | sed 's/Chakeshanega/Naga/g' > $merge_prefix.group2.ind
+sed -i 's/Anatolia_Neolithic/Anatolia_N/g' $merge_prefix.group2.ind

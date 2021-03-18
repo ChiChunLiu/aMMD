@@ -1,0 +1,194 @@
+/home/cliu7/utils/AdmixTools/bin/qpAdm: parameter file: temp/param/qpAdm_Tamang.Upper_YR_LN.Mebrak.Mala.parvnd1e84a
+### THE INPUT PARAMETERS
+##PARAMETER NAME: VALUE
+DIR: data/intermediate
+S1: HO_all_merged.qpAdm
+indivname: data/intermediate/HO_all_merged.qpAdm.grouped.ind
+snpname: data/intermediate/HO_all_merged.qpAdm.snp
+genotypename: data/intermediate/HO_all_merged.qpAdm.geno
+popleft: temp/param/left.vnd1e84a
+popright: temp/param/right.vnd1e84a
+details: YES
+## qpAdm version: 810
+seed: 512888071
+packed geno read OK
+end of inpack
+
+left pops:
+Tamang
+Upper_YR_LN
+Mebrak
+Mala
+
+right pops:
+Mbuti
+Anatolia_N
+Ami
+Mixe
+Ganj_Dareh_N
+Onge
+Villabruna
+DevilsGate
+
+  0               Tamang    7
+  1          Upper_YR_LN    7
+  2               Mebrak    8
+  3                 Mala   11
+  4                Mbuti   10
+  5           Anatolia_N   25
+  6                  Ami   10
+  7                 Mixe   10
+  8         Ganj_Dareh_N    7
+  9                 Onge   12
+ 10           Villabruna    1
+ 11           DevilsGate    4
+jackknife block size:     0.050
+snps: 498990  indivs: 112
+number of blocks for block jackknife: 710
+## ncols: 498990
+coverage:               Tamang 498036
+coverage:          Upper_YR_LN 496840
+coverage:               Mebrak 498978
+coverage:                 Mala 498990
+coverage:                Mbuti 498990
+coverage:           Anatolia_N 498137
+coverage:                  Ami 498990
+coverage:                 Mixe 498990
+coverage:         Ganj_Dareh_N 457128
+coverage:                 Onge 498990
+coverage:           Villabruna 415230
+coverage:           DevilsGate 498716
+dof (jackknife):   583.240
+numsnps used: 416351
+codimension 1
+f4info: 
+f4rank: 2 dof:      5 chisq:    13.592 tail:          0.018423439 dofdiff:      7 chisqdiff:   -13.592 taildiff:                    1
+B:
+          scale     1.000     1.000 
+     Anatolia_N    -0.302    -0.071 
+            Ami     1.563     1.318 
+           Mixe     1.060     0.460 
+   Ganj_Dareh_N    -0.433    -1.409 
+           Onge     0.364     1.110 
+     Villabruna    -0.126     0.075 
+     DevilsGate     1.734    -1.349 
+A:
+          scale   281.569  5027.727 
+    Upper_YR_LN     0.625    -1.108 
+         Mebrak     0.343    -1.089 
+           Mala    -1.579    -0.766 
+
+
+full rank
+f4info: 
+f4rank: 3 dof:      0 chisq:     0.000 tail:                    1 dofdiff:      5 chisqdiff:    13.592 taildiff:          0.018423439
+B:
+          scale     1.000     1.000     1.000 
+     Anatolia_N    -0.292     0.485     1.058 
+            Ami     1.563    -1.378    -0.224 
+           Mixe     1.067    -0.407    -0.022 
+   Ganj_Dareh_N    -0.413     1.918     1.341 
+           Onge     0.376    -0.678     1.155 
+     Villabruna    -0.129    -0.129    -0.166 
+     DevilsGate     1.733     0.738    -1.634 
+A:
+          scale   283.636  4733.962  6099.958 
+    Upper_YR_LN     0.678     1.361     0.477 
+         Mebrak     0.280     0.664    -1.654 
+           Mala    -1.569     0.841     0.188 
+
+
+best coefficients:    36.531   -41.062     5.531 
+Jackknife mean:  -30620.451611531 35128.109829914 -4506.658218383 
+      std. errors: 41278.659 47359.866  6081.223 
+
+error covariance (* 1000000)
+-1813732339 1493784139  319948199 
+1493784139  429937752 -1923721890 
+ 319948199 -1923721890 1603773691 
+
+
+summ: Tamang    3      0.018423 -30620.452 35128.110 -4506.658 -1813732339 1493784139 319948199 429937752 -1923721890 1603773691 
+
+    fixed pat  wt  dof     chisq       tail prob
+          000  0     5    13.592       0.0184234    36.531   -41.062     5.531  infeasible
+          001  1     6    35.139     4.05062e-06    -1.113     2.113     0.000  infeasible
+          010  1     6    20.139      0.00261577     0.732    -0.000     0.268 
+          100  1     6    19.999      0.00277029     0.000     0.834     0.166 
+          011  2     7   534.490               0     1.000    -0.000    -0.000 
+          101  2     7   184.785               0     0.000     1.000    -0.000 
+          110  2     7  3467.521               0     0.000    -0.000     1.000 
+best pat:          000        0.0184234              -  -
+best pat:          100       0.00277029  chi(nested):     6.408 p-value for nested model:       0.0113625
+best pat:          101      1.89974e-36  chi(nested):   164.786 p-value for nested model:     1.01872e-37
+
+coeffs:    36.531   -41.062     5.531 
+
+## dscore:: f_4(Base, Fit, Rbase, right2)
+## genstat:: f_4(Base, Fit, right1, right2)
+
+details:     Upper_YR_LN      Anatolia_N    -0.000431   -2.357555
+details:          Mebrak      Anatolia_N    -0.000527   -3.128280
+details:            Mala      Anatolia_N     0.001759    9.463678
+dscore:      Anatolia_N f4:     0.015643 Z:     1.945044
+
+details:     Upper_YR_LN             Ami     0.003368   16.092551
+details:          Mebrak             Ami     0.001394    6.888822
+details:            Mala             Ami    -0.008908  -40.422164
+dscore:             Ami f4:     0.016527 Z:     1.907306
+
+details:     Upper_YR_LN            Mixe     0.002471   11.129607
+details:          Mebrak            Mixe     0.000990    4.701678
+details:            Mala            Mixe    -0.006012  -25.981437
+dscore:            Mixe f4:     0.016376 Z:     1.777020
+
+details:     Upper_YR_LN    Ganj_Dareh_N    -0.000267   -1.220660
+details:          Mebrak    Ganj_Dareh_N    -0.000526   -2.820613
+details:            Mala    Ganj_Dareh_N     0.002674   12.685494
+dscore:    Ganj_Dareh_N f4:     0.026623 Z:     2.908258
+
+details:     Upper_YR_LN            Onge     0.000798    3.860098
+details:          Mebrak            Onge    -0.000060   -0.310526
+details:            Mala            Onge    -0.002205  -10.718616
+dscore:            Onge f4:     0.019394 Z:     2.282871
+
+details:     Upper_YR_LN      Villabruna    -0.000260   -0.909061
+details:          Mebrak      Villabruna    -0.000169   -0.663237
+details:            Mala      Villabruna     0.000708    2.471142
+dscore:      Villabruna f4:     0.001346 Z:     0.108695
+
+details:     Upper_YR_LN      DevilsGate     0.004255   16.242066
+details:          Mebrak      DevilsGate     0.002248    9.684186
+details:            Mala      DevilsGate    -0.009526  -38.712748
+dscore:      DevilsGate f4:     0.010466 Z:     0.945656
+
+gendstat:                Mbuti           Anatolia_N     1.945
+gendstat:                Mbuti                  Ami     1.907
+gendstat:                Mbuti                 Mixe     1.777
+gendstat:                Mbuti         Ganj_Dareh_N     2.908
+gendstat:                Mbuti                 Onge     2.283
+gendstat:                Mbuti           Villabruna     0.109
+gendstat:                Mbuti           DevilsGate     0.946
+gendstat:           Anatolia_N                  Ami     0.105
+gendstat:           Anatolia_N                 Mixe     0.083
+gendstat:           Anatolia_N         Ganj_Dareh_N     1.384
+gendstat:           Anatolia_N                 Onge     0.434
+gendstat:           Anatolia_N           Villabruna    -1.381
+gendstat:           Anatolia_N           DevilsGate    -0.482
+gendstat:                  Ami                 Mixe    -0.019
+gendstat:                  Ami         Ganj_Dareh_N     1.007
+gendstat:                  Ami                 Onge     0.341
+gendstat:                  Ami           Villabruna    -1.214
+gendstat:                  Ami           DevilsGate    -0.654
+gendstat:                 Mixe         Ganj_Dareh_N     0.967
+gendstat:                 Mixe                 Onge     0.322
+gendstat:                 Mixe           Villabruna    -1.177
+gendstat:                 Mixe           DevilsGate    -0.588
+gendstat:         Ganj_Dareh_N                 Onge    -0.715
+gendstat:         Ganj_Dareh_N           Villabruna    -2.085
+gendstat:         Ganj_Dareh_N           DevilsGate    -1.361
+gendstat:                 Onge           Villabruna    -1.442
+gendstat:                 Onge           DevilsGate    -0.809
+gendstat:           Villabruna           DevilsGate     0.653
+
+## end of run
